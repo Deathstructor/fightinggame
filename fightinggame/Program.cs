@@ -28,8 +28,7 @@ namespace fightinggame
 
         public static void Main(string[] args)
         {
-            Run();
-            // Welcome();
+            Welcome();
             Loading();
         }
 
