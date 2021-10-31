@@ -1,0 +1,5 @@
+(-- = VIKTIGT!)
+
+flera banor (10 kanske?)
+flera fiender per bana (3-5)
+-- fixa om koden från vanliga variabler till serialization

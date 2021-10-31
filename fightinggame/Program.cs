@@ -1,6 +1,8 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 
 
@@ -20,11 +22,7 @@ namespace fightinggame
 
     class Program
     {
-        static string name1 = "", name2 = "";
-        static int p1HP = 100, p2HP = 100;
         static bool welcome = true, run = false;
-
-
 
         public static void Main(string[] args)
         {
@@ -68,9 +66,13 @@ namespace fightinggame
             run = true;
         }
 
+
+
         static void Run()
         {
             EnemyCollection bertil = JsonSerializer.Deserialize<EnemyCollection>(File.ReadAllText(@"..\properties.json"));
+            Enemy e1 = bertil.enemies[0];
+            Enemy e2 = bertil.enemies[1];
 
             Console.WriteLine("Ready...");
             Thread.Sleep(TimeSpan.FromSeconds(1));
