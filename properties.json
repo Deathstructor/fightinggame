@@ -1,0 +1,16 @@
+{
+    "enemies": [
+        {
+            "name": "enemy1",
+            "health": "100",
+            "max_damage": "30",
+            "min_damage": "1"
+        },
+        {
+            "name": "enemy2",
+            "health": "150",
+            "max_damage": "40",
+            "min_damage": "10"
+        }
+    ]
+}

@@ -6,11 +6,16 @@ using System.Threading;
 
 namespace fightinggame
 {
-    public class enemy1
+    public class EnemyCollection
     {
-        public int health { get; set; }
-        public int min_damage { get; set; }
-        public int max_health { get; set; }
+        public Enemy[] enemies { get; set; }
+    }
+    public class Enemy
+    {
+        public string name { get; set; }
+        public string health { get; set; }
+        public string min_damage { get; set; }
+        public string max_damage { get; set; }
     }
 
     class Program
@@ -23,7 +28,8 @@ namespace fightinggame
 
         public static void Main(string[] args)
         {
-            Welcome();
+            Run();
+            // Welcome();
             Loading();
         }
 
@@ -65,6 +71,8 @@ namespace fightinggame
 
         static void Run()
         {
+            EnemyCollection bertil = JsonSerializer.Deserialize<EnemyCollection>(File.ReadAllText(@"..\properties.json"));
+
             Console.WriteLine("Ready...");
             Thread.Sleep(TimeSpan.FromSeconds(1));
             Console.WriteLine("Set...");
