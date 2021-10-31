@@ -15,16 +15,30 @@ namespace fightinggame
 
     class Program
     {
-        string name1 = "", name2 = "";
-        int p1HP = 100, p2HP = 100;
-        // bool menu = true, run = false;
+        static string name1 = "", name2 = "";
+        static int p1HP = 100, p2HP = 100;
+        static bool welcome = true, run = false;
+
+
 
         public static void Main(string[] args)
         {
             Welcome();
+            Loading();
         }
 
-        public void Welcome()
+        public static void Loading()
+        {
+            if (welcome)
+            {
+                Welcome();
+            } else if(run)
+            {
+                Run();
+            }
+        }
+
+        static void Welcome()
         {
             //Spelaren väljer sitt namn
             Console.WriteLine("Welcome to Fighting Game 101!");
@@ -45,11 +59,11 @@ namespace fightinggame
             Console.WriteLine();
 
             //Laddar in metoden för när spelet är igång
-            // menu = false;
-            // run = true;
+            welcome = false;
+            run = true;
         }
 
-        public void Run()
+        static void Run()
         {
             Console.WriteLine("Ready...");
             Thread.Sleep(TimeSpan.FromSeconds(1));
