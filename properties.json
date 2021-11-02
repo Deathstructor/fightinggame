@@ -1,16 +1,27 @@
 {
-    "enemies": [
-        {
-            "name": "enemy1",
-            "health": "100",
-            "max_damage": "30",
-            "min_damage": "1"
-        },
-        {
-            "name": "enemy2",
-            "health": "150",
-            "max_damage": "40",
-            "min_damage": "10"
-        }
+  "player": {
+    "name": "null",
+    "health": "100",
+    "max_damage": "50",
+    "min_damage": "10"
+  },
+
+  "enemies": {
+    "Enemy": [
+      {
+        "name": "Zombie",
+        "health": "100",
+        "max_damage": "30",
+        "min_damage": "1",
+        "id": "1"
+      },
+      {
+        "name": "Witch",
+        "health": "150",
+        "max_damage": "40",
+        "min_damage": "10",
+        "id": "2"
+      }
     ]
+  }
 }

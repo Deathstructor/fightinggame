@@ -8,21 +8,46 @@ using System.Threading;
 
 namespace fightinggame
 {
-    public class EnemyCollection
-    {
-        public Enemy[] enemies { get; set; }
-    }
-    public class Enemy
+    // public class EnemyCollection
+    // {
+    //     public enemies[] enemies { get; set; }
+    // }
+    public class player
     {
         public string name { get; set; }
-        public string health { get; set; }
-        public string min_damage { get; set; }
-        public string max_damage { get; set; }
+        public int health { get; set; }
+        public int min_damage { get; set; }
+        public int max_damage { get; set; }
+    }
+    public class enemies
+    {
+        public string name { get; set; }
+        public List<int> Enemy { get; set; }
     }
 
-    class Program
+    public class Program
     {
         static bool welcome = true, run = false;
+
+        static player Player = new player()
+        {
+            name = "null",
+            health = 100,
+            max_damage = 50,
+            min_damage = 10
+        };
+        static string playerJson = JsonSerializer.Serialize<player>(Player);
+        player p1 = JsonSerializer.Deserialize<player>(playerJson);
+
+        static enemies Enemy = new enemies()
+        {
+            name = "Enemy 1",
+            Enemy = new List<int>()
+        };
+        static string enemyJson = JsonSerializer.Serialize<enemies>(Enemy);
+        enemies e1 = JsonSerializer.Deserialize<enemies>(enemyJson);
+
+
 
         public static void Main(string[] args)
         {
@@ -46,18 +71,10 @@ namespace fightinggame
             //Spelaren väljer sitt namn
             Console.WriteLine("Welcome to Fighting Game 101!");
             Console.WriteLine();
-            Console.WriteLine("PLAYER 1");
             Console.WriteLine("Choose your name:");
-            name1 = Console.ReadLine();
+            Player.name = Console.ReadLine();
             
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("PLAYER 2");
-            Console.WriteLine("Choose your name:");
-            name2 = Console.ReadLine();
-            Console.Clear();
-            
-            Console.WriteLine($"{name1} VS {name2}");
+            Console.WriteLine($"{Player.name} VS {Enemy.name}");
             Console.WriteLine();
             Console.WriteLine();
 
@@ -70,9 +87,9 @@ namespace fightinggame
 
         static void Run()
         {
-            EnemyCollection bertil = JsonSerializer.Deserialize<EnemyCollection>(File.ReadAllText(@"..\properties.json"));
-            Enemy e1 = bertil.enemies[0];
-            Enemy e2 = bertil.enemies[1];
+            // EnemyCollection bertil = JsonSerializer.Deserialize<EnemyCollection>(File.ReadAllText(@"..\properties.json"));
+            // Enemy e1 = bertil.enemies[0];
+            // Enemy e2 = bertil.enemies[1];
 
             Console.WriteLine("Ready...");
             Thread.Sleep(TimeSpan.FromSeconds(1));
@@ -82,8 +99,8 @@ namespace fightinggame
             Console.WriteLine();
             Console.WriteLine();
 
-            //Vad som händer så länge en spelare är vid liv
-            while (p1HP > 0 && p2HP > 0)
+            // Vad som händer så länge en spelare är vid liv
+            while (Player.health > 0 && Enemy > 0)
             {
                 Random rdm = new Random();
 
