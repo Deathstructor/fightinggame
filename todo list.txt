@@ -1,6 +1,11 @@
-(-- = VIKTIGT!)
+(+ = VIKTIGT!)
 
-flera nivåer (10 kanske?)
-flera fiender per bana (3-5)
--- fixa om koden från vanliga variabler till serialization
--- lista ut hur serialiserign / deserialisering av listor i json funkar
+- flera nivåer (10 kanske?)
+- flera fiender per bana (3-5)
+-+ lista ut hur serialiserign / deserialisering av listor i json funkar
+- Level selector
+- Save games {
+    Kolla om spelaren redan har ett namn
+    Spara och ladda in sparfiler
+}
+- Kanske göra en butik med uppgraderingar att köpa
