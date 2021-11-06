@@ -8,6 +8,7 @@ using System.Text.Json.Serialization;
 
 namespace fightinggame
 {
+    // Klasser som beskriverk objekt för att serialisera och deserialisera "properties.json".
     public class User
     {
         public Player player { get; set; }
@@ -38,28 +39,119 @@ namespace fightinggame
         public int id { get; set; }
     }
 
+
+
     public class Program
     {
-        static bool welcome = true, run = false;
-
         static void Main(string[] args)
         {
-            Loading();
-            Welcome();
+            Menu();
         }
 
-        public static void Loading()
+        // Metod för allt som händer i "Main Menu"
+        static void Menu()
         {
-            if (welcome)
+            //Ett lite "fancy" system för att navigera i menyn
+            int selected = 1;
+            var ch = ConsoleKey.B;
+            do
             {
-                Welcome();
-            } else if(run)
-            {
-                Run();
-            }
+                Console.WriteLine("Welcome to Fighting Game 101!");
+                Console.WriteLine();
+                Console.WriteLine("What would you like to do?");
+                Console.WriteLine();
+                Console.WriteLine();
+
+
+                // Kollar vilken rad man är på och lägger till pilen framför texten på raden man är på.
+                if (selected == 1)
+                {
+                    Console.WriteLine("> New Game");
+                }
+                else
+                {
+                    Console.WriteLine("New Game");
+
+                }
+                if (selected == 2)
+                {
+                    Console.WriteLine("> Load Saved Game");
+                }
+                else
+                {
+                    Console.WriteLine("Load Saved Game");
+
+                }
+                if (selected == 3)
+                {
+                    Console.WriteLine("> Level Selector");
+                }
+                else
+                {
+                    Console.WriteLine("Level Selector");
+                }
+
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("Use the arrow keys to navigate and press enter to select.");
+                Console.ForegroundColor = ConsoleColor.White;
+
+                ch = Console.ReadKey(true).Key;
+
+                switch (ch)
+                {
+                    // Flyttar ner pilen om man trycker på "Down Arrow" och flyttar den högst upp
+                    // om pilen är längst ner.
+                    case ConsoleKey.DownArrow:
+                        if (selected == 3)
+                        {
+                            selected = 1;
+                        }
+                        else
+                        {
+                            selected++;
+                        }
+                        break;
+
+                    // Samma som ovan, fast med "Up Arrow" istället.
+                    case ConsoleKey.UpArrow:
+                        if (selected == 1)
+                        {
+                            selected = 3;
+                        }
+                        else
+                        {
+                            selected--;
+                        }
+                        break;
+
+                    // Laddar in metod när man trycker på ENTER beroende på vilken sak i
+                    // menyn man har valt.
+                    case ConsoleKey.Enter:
+                        switch (selected)
+                        {
+                            case 1:
+                                NewGame();
+                                Console.Clear();
+                                break;
+
+                            case 2:
+                                // LoadSaveGame();
+                                Console.Clear();
+                                break;
+
+                            case 3:
+                                // LevelSelector();
+                                Console.Clear();
+                                break;
+                        }
+                        break;
+                }
+            Console.Clear();
+            } while (true);
         }
 
-        static void Welcome()
+        static void NewGame()
         {
             string propertyData = File.ReadAllText(@"..\properties.json");
             User deserializedPlayer = JsonSerializer.Deserialize<User>(propertyData);
@@ -68,19 +160,26 @@ namespace fightinggame
             Player p = deserializedPlayer.player;
             EnemyCollection ec = deserializedEnemies.enemy;
 
-            //Spelaren väljer sitt namn
-            Console.WriteLine("Welcome to Fighting Game 101!");
-            Console.WriteLine();
-            Console.WriteLine("Choose your name:");
-            p.name = Console.ReadLine();
-            
-            Console.WriteLine($"{p.name} VS {ec.enemy[0].name}");
-            Console.WriteLine();
-            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("If you want to go back to the man menu press \"Left Arrow\".");
+            Console.ForegroundColor = ConsoleColor.White;
 
-            //Laddar in metoden för när spelet är igång
-            welcome = false;
-            run = true;
+            
+
+            if (p.name == "undefined")
+            {
+                Console.WriteLine("To begin with, what would you like to be called?");
+                Console.WriteLine("Enter your name below:");
+                p.name = Console.ReadLine();
+
+                Player playerSerialize = new Player()
+                {
+                    name = p.name
+                };
+
+                string serializePlayer = JsonSerializer.Serialize<Player>(playerSerialize);
+                File.WriteAllText("test.json", serializePlayer);
+            }
         }
 
 

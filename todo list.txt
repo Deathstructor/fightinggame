@@ -1,8 +1,8 @@
 (+ = VIKTIGT!)
 
-- flera nivåer (10 kanske?)
-- flera fiender per bana (3-5)
--+ lista ut hur serialiserign / deserialisering av listor i json funkar
+- flera nivåer (10 kanske?) + eventuelt "freeplay / endless" mode
+- flera fiender per bana (2-5 kanske)
+-+ lista ut hur serialiserign i json funkar
 - Level selector
 - Save games {
     Kolla om spelaren redan har ett namn
