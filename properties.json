@@ -2,7 +2,7 @@
   "player": {
     "name": "undefined",
     "health": 100,
-    "max_damage": 50,
+    "max_damage": 40,
     "min_damage": 10
   },
 
