@@ -149,13 +149,16 @@ namespace fightinggame
         }
 
 
-
+        static bool saveTo1 = false, saveTo2 = false, saveTo3 = false;
+        static bool overwrite1 = false, overwrite2 = false, overwrite3 = false;
+        // Meny för savegames som fungerar på samma sätt som huvud menyn-
         static void SelectNewSave()
         {
             Console.Clear();
 
             int selected = 1;
             var ch = ConsoleKey.B;
+            bool done = false;
             do
             {
                 Console.WriteLine("Select savegame slot");
@@ -224,14 +227,14 @@ namespace fightinggame
                         }
                         break;
 
-                    // Laddar in metod när man trycker på ENTER beroende på vilken sak i
-                    // menyn man har valt.
+
+                    // Väljer en sparfil där man ska spara all "progress" man har gjort i spelet.
                     case ConsoleKey.Enter:
                         ch = ConsoleKey.Insert;
                         switch (selected)
                         {
                             case 1:
-                                while (ch != ConsoleKey.Y || ch != ConsoleKey.N)
+                                while (ch != ConsoleKey.Y || ch != ConsoleKey.N && overwrite1 == false)
                                 {
                                     Console.WriteLine("Are you sure that you want to overwrite this save? (y/n)");
                                     Console.WriteLine();
@@ -242,8 +245,13 @@ namespace fightinggame
                                         Console.WriteLine();
                                         Console.WriteLine();
                                         Console.WriteLine("Successfully Created Savefile");
+                                        saveTo1 = true;
+                                        saveTo2 = false;
+                                        saveTo3 = false;
                                         Thread.Sleep(TimeSpan.FromSeconds(2));
                                         NewGame();
+                                        overwrite1 = true;
+                                        done = true;
                                     }
                                     else
                                     {
@@ -254,7 +262,7 @@ namespace fightinggame
                                 break;
 
                             case 2:
-                                while (ch != ConsoleKey.Y || ch != ConsoleKey.N)
+                                while (ch != ConsoleKey.Y || ch != ConsoleKey.N && overwrite2 == false)
                                 {
                                     Console.WriteLine("Are you sure that you want to overwrite this save? (y/n)");
                                     Console.WriteLine();
@@ -265,8 +273,12 @@ namespace fightinggame
                                         Console.WriteLine();
                                         Console.WriteLine();
                                         Console.WriteLine("Successfully Created Savefile");
+                                        saveTo1 = false;
+                                        saveTo2 = true;
+                                        saveTo3 = false;
                                         Thread.Sleep(TimeSpan.FromSeconds(2));
                                         NewGame();
+                                        overwrite2 = true;
                                     }
                                     else
                                     {
@@ -288,8 +300,12 @@ namespace fightinggame
                                         Console.WriteLine();
                                         Console.WriteLine();
                                         Console.WriteLine("Successfully Created Savefile");
+                                        saveTo1 = false;
+                                        saveTo2 = false;
+                                        saveTo3 = true;
                                         Thread.Sleep(TimeSpan.FromSeconds(2));
                                         NewGame();
+                                        overwrite3 = true;
                                     }
                                     else
                                     {
@@ -302,7 +318,7 @@ namespace fightinggame
                         break;
                 }
                 Console.Clear();
-            } while (true);
+            } while (!done);
         }
 
 
@@ -311,7 +327,24 @@ namespace fightinggame
         {
             Console.Clear();
 
+
             string propertyData = File.ReadAllText(@"..\properties.json");
+
+            if (saveTo1)
+            {
+                propertyData = File.ReadAllText(@"..\Savegames\Save1Settings.json");
+            }
+            else if (saveTo2)
+            {
+                propertyData = File.ReadAllText(@"..\Savegames\Save2Settings.json");
+            }
+            else if (saveTo3)
+            {
+                propertyData = File.ReadAllText(@"..\Savegames\Save3Settings.json");
+            }
+
+
+
             User deserializedPlayer = JsonSerializer.Deserialize<User>(propertyData);
             EnemyTypes deserializedEnemies = JsonSerializer.Deserialize<EnemyTypes>(propertyData);
 
@@ -334,7 +367,18 @@ namespace fightinggame
                 };
 
                 string serializePlayer = JsonSerializer.Serialize<Player>(playerSerialize);
-                File.WriteAllText("test.json", serializePlayer);
+                if (saveTo1)
+                {
+                    File.WriteAllText("Save1Settings.json", serializePlayer);
+                }
+                else if (saveTo2)
+                {
+                    File.WriteAllText("Save2Settings.json", serializePlayer);
+                }
+                else if (saveTo3)
+                {
+                    File.WriteAllText("Save3Settings.json", serializePlayer);
+                }
             }
         }
 

@@ -1,0 +1,27 @@
+{
+  "player": {
+    "name": "undefined",
+    "health": 100,
+    "max_damage": 40,
+    "min_damage": 10
+  },
+
+  "enemies": {
+    "enemy": [
+      {
+        "name": "Zombie",
+        "health": 100,
+        "max_damage": 20,
+        "min_damage": 1,
+        "id": 1
+      },
+      {
+        "name": "Witch",
+        "health": 120,
+        "max_damage": 30,
+        "min_damage": 10,
+        "id": 2
+      }
+    ]
+  }
+}
