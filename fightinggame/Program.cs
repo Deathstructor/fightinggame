@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Reflection.Emit;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Threading;
@@ -361,23 +362,27 @@ namespace fightinggame
                 Console.WriteLine("Enter your name below:");
                 p.name = Console.ReadLine();
 
-                Player playerSerialize = new Player()
-                {
-                    name = p.name
-                };
+                // Player playerSerialize = new Player()
+                // {
+                    // name = p.name
+                // };
 
-                string serializePlayer = JsonSerializer.Serialize<Player>(playerSerialize);
+                string allData = File.ReadAllText(@"..\properties.json");
+
+                allData = allData.Replace("undefined", p.name);
+
+                // string serializePlayer = JsonSerializer.Serialize<Player>(playerSerialize);
                 if (saveTo1)
                 {
-                    File.WriteAllText("Save1Settings.json", serializePlayer);
+                    File.WriteAllText(@"..\Savegames\Save1Settings.json", allData);
                 }
                 else if (saveTo2)
                 {
-                    File.WriteAllText("Save2Settings.json", serializePlayer);
+                    File.WriteAllText(@"..\Savegames\Save2Settings.json", allData);
                 }
                 else if (saveTo3)
                 {
-                    File.WriteAllText("Save3Settings.json", serializePlayer);
+                    File.WriteAllText(@"..\Savegames\Save3Settings.json", allData);
                 }
             }
         }
