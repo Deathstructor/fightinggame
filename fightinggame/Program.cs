@@ -13,6 +13,17 @@ namespace fightinggame
             Menu();
         }
 
+        //  ########       ########     ####################    ########       #####    #####          #####
+        //  #########     #########     ####################    #########      #####    #####          #####
+        //  ##########   ##########     #####                   ##########     #####    #####          #####
+        //  ##### ##### ##### #####     #####                   ##### #####    #####    #####          #####
+        //  #####  #########  #####     ###############         #####  #####   #####    #####          #####
+        //  #####   #######   #####     ###############         #####   #####  #####    #####          #####
+        //  #####    #####    #####     #####                   #####    ##### #####    #####          #####
+        //  #####             #####     #####                   #####     ##########    #####          #####
+        //  #####             #####     ####################    #####      #########    ####################
+        //  #####             #####     ####################    #####       ########    ####################
+
         // Metod för allt som händer i "Main Menu"
         static void Menu()
         {
@@ -113,6 +124,16 @@ namespace fightinggame
             } while (true);
         }
 
+        //  ####################     ####################   #####              #####     ####################
+        //  ####################     ####################    #####            #####      ####################
+        //  #####          #####     #####          #####     #####          #####       #####
+        //  #####                    #####          #####      #####        #####        #####
+        //  ####################     #####          #####       #####      #####         ###############
+        //  ####################     ####################        #####    #####          ###############
+        //                 #####     ####################         #####  #####           #####
+        //  #####          #####     #####          #####          ##########            #####
+        //  ####################     #####          #####           #######              ####################
+        //  ####################     #####          #####            #####               ####################
 
         static bool saveTo1 = false, saveTo2 = false, saveTo3 = false;
         static bool overwrite1 = false, overwrite2 = false, overwrite3 = false;
@@ -126,7 +147,7 @@ namespace fightinggame
             bool done = false;
             do
             {
-                Console.WriteLine("Select savegame slot");
+                Console.WriteLine("Select savegame slot:");
                 Console.WriteLine();
                 Console.WriteLine();
 
@@ -201,6 +222,8 @@ namespace fightinggame
                             case 1:
                                 while (ch != ConsoleKey.Y || ch != ConsoleKey.N && overwrite1 == false)
                                 {
+                                    Console.WriteLine();
+                                    Console.WriteLine();
                                     Console.WriteLine("Are you sure that you want to overwrite this save? (y/n)");
                                     Console.WriteLine();
                                     ch = Console.ReadKey(true).Key;
@@ -229,6 +252,8 @@ namespace fightinggame
                             case 2:
                                 while (ch != ConsoleKey.Y || ch != ConsoleKey.N && overwrite2 == false)
                                 {
+                                    Console.WriteLine();
+                                    Console.WriteLine();
                                     Console.WriteLine("Are you sure that you want to overwrite this save? (y/n)");
                                     Console.WriteLine();
                                     ch = Console.ReadKey(true).Key;
@@ -256,13 +281,14 @@ namespace fightinggame
                             case 3:
                                 while (ch != ConsoleKey.Y || ch != ConsoleKey.N && overwrite3 == false)
                                 {
+                                    Console.WriteLine();
+                                    Console.WriteLine();
                                     Console.WriteLine("Are you sure that you want to overwrite this save? (y/n)");
                                     Console.WriteLine();
                                     ch = Console.ReadKey(true).Key;
                                     if (ch == ConsoleKey.Y)
                                     {
                                         File.WriteAllText(@"..\Savegames\Save3", "Successfully Created Savefile");
-                                        Console.WriteLine();
                                         Console.WriteLine();
                                         Console.WriteLine("Successfully Created Savefile");
                                         saveTo1 = false;
@@ -286,10 +312,108 @@ namespace fightinggame
             } while (!done);
         }
 
+        // #####                ####################        ####################        ###############
+        // #####                ####################        ####################        ###################
+        // #####                #####          #####        #####          #####        #####          #####
+        // #####                #####          #####        #####          #####        #####           #####
+        // #####                #####          #####        #####          #####        #####           #####
+        // #####                #####          #####        ####################        #####           #####
+        // #####                #####          #####        ####################        #####           #####
+        // #####                #####          #####        #####          #####        #####          #####
+        // ###############      ####################        #####          #####        ###################
+        // ###############      ####################        #####          #####        ###############
 
 
+        // Metod för att ladda in en sparfil
         static void LoadSaveGame() {
-            
+            int selected = 1;
+            var ch = ConsoleKey.Insert;
+            do
+            {
+                Console.WriteLine("Select the savegame that you want to load:");
+
+                // Kollar vilken rad man är på och lägger till pilen framför texten på raden man är på.
+                if (selected == 1)
+                {
+                    Console.WriteLine("> Save 1");
+                }
+                else
+                {
+                    Console.WriteLine("Save 1");
+
+                }
+                if (selected == 2)
+                {
+                    Console.WriteLine("> Save 2");
+                }
+                else
+                {
+                    Console.WriteLine("Save 2");
+
+                }
+                if (selected == 3)
+                {
+                    Console.WriteLine("> Save 3");
+                }
+                else
+                {
+                    Console.WriteLine("Save 3");
+                }
+
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("Use the arrow keys to navigate and press enter to select.");
+                Console.ForegroundColor = ConsoleColor.White;
+
+                ch = Console.ReadKey(true).Key;
+
+                switch (ch)
+                {
+                    // Flyttar ner pilen om man trycker på "Down Arrow" och flyttar den högst upp
+                    // om pilen är längst ner.
+                    case ConsoleKey.DownArrow:
+                        if (selected == 3)
+                        {
+                            selected = 1;
+                        }
+                        else
+                        {
+                            selected++;
+                        }
+                        break;
+
+                    // Samma som ovan, fast med "Up Arrow" istället.
+                    case ConsoleKey.UpArrow:
+                        if (selected == 1)
+                        {
+                            selected = 3;
+                        }
+                        else
+                        {
+                            selected--;
+                        }
+                        break;
+
+                    // Laddar in sparfilen som man har valt när man trycker på ENTER
+                    case ConsoleKey.Enter:
+                        switch (selected)
+                        {
+                            case 1:
+                                
+                                break;
+
+                            case 2:
+                                LoadSaveGame();
+                                break;
+
+                            case 3:
+                                // LevelSelector();
+                                break;
+                        }
+                        break;
+                }
+                Console.Clear();
+            } while (true);
         }
 
 
@@ -336,6 +460,17 @@ namespace fightinggame
                 while (p.name == "undefined" || p.name == "" || p.name.Length > 16 )
                 {
                     p.name = Console.ReadLine();
+
+                    if (p.name == "")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Your name can't be blank!");
+                    }
+                    else if (p.name.Length > 16)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Your name cannot contain more that 16 characters!");
+                    }
                 }
 
                 goto ReplaceName;
