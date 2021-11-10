@@ -1,9 +1,10 @@
 {
   "player": {
-    "name": "kekw",
+    "name": "hello",
     "health": 100,
     "max_damage": 40,
-    "min_damage": 10
+    "min_damage": 10,
+    "accuracy": 0.8
   },
 
   "enemies": {
@@ -13,6 +14,7 @@
         "health": 100,
         "max_damage": 20,
         "min_damage": 1,
+        "accuracy": 0.8,
         "id": 1
       },
       {
@@ -20,6 +22,7 @@
         "health": 120,
         "max_damage": 30,
         "min_damage": 10,
+        "accuracy": 0.75,
         "id": 2
       }
     ]

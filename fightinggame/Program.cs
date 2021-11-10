@@ -1,47 +1,11 @@
-﻿using System.Reflection.Emit;
-using System;
+﻿using System;
 using System.IO;
-using System.Collections.Generic;
 using System.Threading;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 
 namespace fightinggame
 {
-    // Klasser som beskriverk objekt för att serialisera och deserialisera "properties.json".
-    public class User
-    {
-        public Player player { get; set; }
-    }
-    public class Player
-    {
-        public string name { get; set; }
-        public int health { get; set; }
-        public int max_damage { get; set; }
-        public int min_damage { get; set; }
-    }
-
-    public class EnemyTypes
-    {
-        [JsonPropertyName("enemies")]
-        public EnemyCollection enemy { get; set; }
-    }
-    public class EnemyCollection
-    {
-        public List<Enemy> enemy { get; set; }
-    }
-    public class Enemy
-    {
-        public string name { get; set; }
-        public int health { get; set; }
-        public int max_damage { get; set; }
-        public int min_damage { get; set; }
-        public int id { get; set; }
-    }
-
-
-
     public class Program
     {
         static void Main(string[] args)
@@ -54,7 +18,7 @@ namespace fightinggame
         {
             //Ett lite "fancy" system för att navigera i menyn
             int selected = 1;
-            var ch = ConsoleKey.B;
+            var ch = ConsoleKey.Insert;
             do
             {
                 Console.WriteLine("Welcome to Fighting Game 101!");
@@ -136,7 +100,7 @@ namespace fightinggame
                                 break;
 
                             case 2:
-                                // LoadSaveGame();
+                                LoadSaveGame();
                                 break;
 
                             case 3:
@@ -290,7 +254,7 @@ namespace fightinggame
                                 break;
 
                             case 3:
-                                while (ch != ConsoleKey.Y || ch != ConsoleKey.N)
+                                while (ch != ConsoleKey.Y || ch != ConsoleKey.N && overwrite3 == false)
                                 {
                                     Console.WriteLine("Are you sure that you want to overwrite this save? (y/n)");
                                     Console.WriteLine();
@@ -324,10 +288,15 @@ namespace fightinggame
 
 
 
+        static void LoadSaveGame() {
+            
+        }
+
+
+
         static void NewGame()
         {
             Console.Clear();
-
 
             string propertyData = File.ReadAllText(@"..\properties.json");
 
@@ -352,38 +321,37 @@ namespace fightinggame
             Player p = deserializedPlayer.player;
             EnemyCollection ec = deserializedEnemies.enemy;
 
-            // Console.ForegroundColor = ConsoleColor.DarkGray;
-            // Console.WriteLine("If you want to go back to the man menu press \"Left Arrow\".");
-            // Console.ForegroundColor = ConsoleColor.White;
+            p.name = "undefined";
+            
+            ReplaceName:
+            string allData = File.ReadAllText(@"..\properties.json");
+            allData = allData.Replace("undefined", p.name);
 
+            // Spelaren väljer sitt namn
             if (p.name == "undefined")
             {
                 Console.WriteLine("To begin with, what would you like to be called?");
                 Console.WriteLine("Enter your name below:");
-                p.name = Console.ReadLine();
 
-                // Player playerSerialize = new Player()
-                // {
-                    // name = p.name
-                // };
-
-                string allData = File.ReadAllText(@"..\properties.json");
-
-                allData = allData.Replace("undefined", p.name);
-
-                // string serializePlayer = JsonSerializer.Serialize<Player>(playerSerialize);
-                if (saveTo1)
+                while (p.name == "undefined" || p.name == "" || p.name.Length > 16 )
                 {
-                    File.WriteAllText(@"..\Savegames\Save1Settings.json", allData);
+                    p.name = Console.ReadLine();
                 }
-                else if (saveTo2)
-                {
-                    File.WriteAllText(@"..\Savegames\Save2Settings.json", allData);
-                }
-                else if (saveTo3)
-                {
-                    File.WriteAllText(@"..\Savegames\Save3Settings.json", allData);
-                }
+
+                goto ReplaceName;
+            }
+
+            if (saveTo1)
+            {
+                File.WriteAllText(@"..\Savegames\Save1Settings.json", allData);
+            }
+            else if (saveTo2)
+            {
+                File.WriteAllText(@"..\Savegames\Save2Settings.json", allData);
+            }
+            else if (saveTo3)
+            {
+                File.WriteAllText(@"..\Savegames\Save3Settings.json", allData);
             }
         }
 
