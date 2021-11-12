@@ -15,6 +15,7 @@
         "max_damage": 20,
         "min_damage": 1,
         "accuracy": 0.8,
+        "type": "undead",
         "id": 1
       },
       {
@@ -23,21 +24,26 @@
         "max_damage": 30,
         "min_damage": 10,
         "accuracy": 0.75,
+        "type": "magic",
         "id": 2
       }
     ]
   },
 
   "levels": {
-    "level1": false,
-    "level2": false,
-    "level3": false,
-    "level4": false,
-    "level5": false,
-    "level6": false,
-    "level7": false,
-    "level8": false,
-    "level9": false,
-    "level10": false
+    "level": [
+      {
+        "level1": false,
+        "level2": false,
+        "level3": false,
+        "level4": false,
+        "level5": false,
+        "level6": false,
+        "level7": false,
+        "level8": false,
+        "level9": false,
+        "level10": false
+      }
+    ]
   }
 }

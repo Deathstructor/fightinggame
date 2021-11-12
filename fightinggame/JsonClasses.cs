@@ -16,9 +16,11 @@ namespace fightinggame
         public int min_damage { get; set; }
     }
 
+
+
     public class EnemyTypes
     {
-        [JsonPropertyName("enemies")]
+        // [JsonPropertyName("enemies")]
         public EnemyCollection enemy { get; set; }
     }
     public class EnemyCollection
@@ -32,5 +34,30 @@ namespace fightinggame
         public int max_damage { get; set; }
         public int min_damage { get; set; }
         public int id { get; set; }
+    }
+
+
+
+    public class LevelList
+    {
+        // [JsonPropertyName("levels")]
+        public LevelCollection level { get; set; }
+    }
+    public class LevelCollection
+    {
+        public List<Level> level { get; set; }
+    }
+    public class Level
+    {
+        public bool level1 { get; set; }
+        public bool level2 { get; set; }
+        public bool level3 { get; set; }
+        public bool level4 { get; set; }
+        public bool level5 { get; set; }
+        public bool level6 { get; set; }
+        public bool level7 { get; set; }
+        public bool level8 { get; set; }
+        public bool level9 { get; set; }
+        public bool level10 { get; set; }
     }
 }

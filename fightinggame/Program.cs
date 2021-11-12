@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.ComponentModel;
+using System;
 using System.IO;
 using System.Threading;
 using System.Text.Json;
@@ -29,10 +30,12 @@ namespace fightinggame
         {
             //Ett lite "fancy" system för att navigera i menyn
             int selected = 1;
-            var ch = ConsoleKey.Insert;
+            var kp = ConsoleKey.Insert;
             do
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Welcome to Fighting Game 101!");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine();
                 Console.WriteLine("What would you like to do?");
                 Console.WriteLine();
@@ -60,11 +63,11 @@ namespace fightinggame
                 }
                 if (selected == 3)
                 {
-                    Console.WriteLine("> Level Selector");
+                    Console.WriteLine("> Tutorial");
                 }
                 else
                 {
-                    Console.WriteLine("Level Selector");
+                    Console.WriteLine("Tutorial");
                 }
 
                 Console.WriteLine();
@@ -72,9 +75,9 @@ namespace fightinggame
                 Console.WriteLine("Use the arrow keys to navigate and press enter to select.");
                 Console.ForegroundColor = ConsoleColor.White;
 
-                ch = Console.ReadKey(true).Key;
+                kp = Console.ReadKey(true).Key;
 
-                switch (ch)
+                switch (kp)
                 {
                     // Flyttar ner pilen om man trycker på "Down Arrow" och flyttar den högst upp
                     // om pilen är längst ner.
@@ -107,15 +110,15 @@ namespace fightinggame
                         switch (selected)
                         {
                             case 1:
-                                SelectNewSave();
+                                selectNewSave();
                                 break;
 
                             case 2:
-                                LoadSaveGame();
+                                loadSaveGame();
                                 break;
 
                             case 3:
-                                // LevelSelector();
+                                tutorial();
                                 break;
                         }
                         break;
@@ -138,12 +141,12 @@ namespace fightinggame
         static bool saveTo1 = false, saveTo2 = false, saveTo3 = false;
         static bool overwrite1 = false, overwrite2 = false, overwrite3 = false;
         // Meny för savegames som fungerar på samma sätt som huvud menyn-
-        static void SelectNewSave()
+        static void selectNewSave()
         {
             Console.Clear();
 
             int selected = 1;
-            var ch = ConsoleKey.B;
+            var kp = ConsoleKey.B;
             bool done = false;
             do
             {
@@ -184,9 +187,9 @@ namespace fightinggame
                 Console.WriteLine("Use the arrow keys to navigate and press enter to select.");
                 Console.ForegroundColor = ConsoleColor.White;
 
-                ch = Console.ReadKey(true).Key;
+                kp = Console.ReadKey(true).Key;
 
-                switch (ch)
+                switch (kp)
                 {
                     // Flyttar ner pilen om man trycker på "Down Arrow" och flyttar den högst upp
                     // om pilen är längst ner.
@@ -216,18 +219,18 @@ namespace fightinggame
 
                     // Väljer en sparfil där man ska spara all "progress" man har gjort i spelet.
                     case ConsoleKey.Enter:
-                        ch = ConsoleKey.Insert;
+                        kp = ConsoleKey.Insert;
                         switch (selected)
                         {
                             case 1:
-                                while (ch != ConsoleKey.Y || ch != ConsoleKey.N && overwrite1 == false)
+                                while (kp != ConsoleKey.Y || kp != ConsoleKey.N && overwrite1 == false)
                                 {
                                     Console.WriteLine();
                                     Console.WriteLine();
                                     Console.WriteLine("Are you sure that you want to overwrite this save? (y/n)");
                                     Console.WriteLine();
-                                    ch = Console.ReadKey(true).Key;
-                                    if (ch == ConsoleKey.Y)
+                                    kp = Console.ReadKey(true).Key;
+                                    if (kp == ConsoleKey.Y)
                                     {
                                         File.WriteAllText(@"..\Savegames\Save1", "Successfully Created Savefile");
                                         Console.WriteLine();
@@ -237,7 +240,7 @@ namespace fightinggame
                                         saveTo2 = false;
                                         saveTo3 = false;
                                         Thread.Sleep(TimeSpan.FromSeconds(2));
-                                        NewGame();
+                                        newGame();
                                         overwrite1 = true;
                                         done = true;
                                     }
@@ -250,14 +253,14 @@ namespace fightinggame
                                 break;
 
                             case 2:
-                                while (ch != ConsoleKey.Y || ch != ConsoleKey.N && overwrite2 == false)
+                                while (kp != ConsoleKey.Y || kp != ConsoleKey.N && overwrite2 == false)
                                 {
                                     Console.WriteLine();
                                     Console.WriteLine();
                                     Console.WriteLine("Are you sure that you want to overwrite this save? (y/n)");
                                     Console.WriteLine();
-                                    ch = Console.ReadKey(true).Key;
-                                    if (ch == ConsoleKey.Y)
+                                    kp = Console.ReadKey(true).Key;
+                                    if (kp == ConsoleKey.Y)
                                     {
                                         File.WriteAllText(@"..\Savegames\Save2", "Successfully Created Savefile");
                                         Console.WriteLine();
@@ -267,7 +270,7 @@ namespace fightinggame
                                         saveTo2 = true;
                                         saveTo3 = false;
                                         Thread.Sleep(TimeSpan.FromSeconds(2));
-                                        NewGame();
+                                        newGame();
                                         overwrite2 = true;
                                     }
                                     else
@@ -279,14 +282,14 @@ namespace fightinggame
                                 break;
 
                             case 3:
-                                while (ch != ConsoleKey.Y || ch != ConsoleKey.N && overwrite3 == false)
+                                while (kp != ConsoleKey.Y || kp != ConsoleKey.N && overwrite3 == false)
                                 {
                                     Console.WriteLine();
                                     Console.WriteLine();
                                     Console.WriteLine("Are you sure that you want to overwrite this save? (y/n)");
                                     Console.WriteLine();
-                                    ch = Console.ReadKey(true).Key;
-                                    if (ch == ConsoleKey.Y)
+                                    kp = Console.ReadKey(true).Key;
+                                    if (kp == ConsoleKey.Y)
                                     {
                                         File.WriteAllText(@"..\Savegames\Save3", "Successfully Created Savefile");
                                         Console.WriteLine();
@@ -295,7 +298,7 @@ namespace fightinggame
                                         saveTo2 = false;
                                         saveTo3 = true;
                                         Thread.Sleep(TimeSpan.FromSeconds(2));
-                                        NewGame();
+                                        newGame();
                                         overwrite3 = true;
                                     }
                                     else
@@ -325,12 +328,12 @@ namespace fightinggame
 
 
         // Metod för att ladda in en sparfil
-        static void LoadSaveGame()
+        static void loadSaveGame()
         {
             Console.Clear();
-            
+
             int selected = 1;
-            var ch = ConsoleKey.Insert;
+            var kp = ConsoleKey.Insert;
             do
             {
                 Console.WriteLine("Select the savegame that you want to load:");
@@ -368,9 +371,9 @@ namespace fightinggame
                 Console.WriteLine("Use the arrow keys to navigate and press enter to select.");
                 Console.ForegroundColor = ConsoleColor.White;
 
-                ch = Console.ReadKey(true).Key;
+                kp = Console.ReadKey(true).Key;
 
-                switch (ch)
+                switch (kp)
                 {
                     // Flyttar ner pilen om man trycker på "Down Arrow" och flyttar den högst upp
                     // om pilen är längst ner.
@@ -405,7 +408,7 @@ namespace fightinggame
                                 saveTo1 = true;
                                 saveTo2 = false;
                                 saveTo3 = false;
-                                Run();
+                                run();
                                 break;
 
                             case 2:
@@ -431,18 +434,18 @@ namespace fightinggame
         static void loadContent()
         {
             Console.Clear();
-            
+
             if (saveTo1)
             {
-                
+
             }
             else if (saveTo2)
             {
-                
+
             }
-            else if(saveTo3)
+            else if (saveTo3)
             {
-                
+
             }
         }
 
@@ -461,7 +464,7 @@ namespace fightinggame
 
 
 
-        static void NewGame()
+        static void newGame()
         {
             Console.Clear();
 
@@ -531,21 +534,208 @@ namespace fightinggame
             {
                 File.WriteAllText(@"..\Savegames\Save3Settings.json", allData);
             }
+
+            level1();
         }
+
+
+
+        //  ###############     #####          #####    ###############     ####################    ############          ###############     ####################    #####
+        //  ###############     #####          #####    ###############     ####################    ###############       ###############     ####################    #####
+        //       #####          #####          #####         #####          #####          #####    #####       #####          #####          #####          #####    #####
+        //       #####          #####          #####         #####          #####          #####    #####       #####          #####          #####          #####    #####
+        //       #####          #####          #####         #####          #####          #####    ###############            #####          #####          #####    #####
+        //       #####          #####          #####         #####          #####          #####    #############              #####          ####################    #####
+        //       #####          #####          #####         #####          #####          #####    #####    #####             #####          ####################    #####
+        //       #####          #####          #####         #####          #####          #####    #####     #####            #####          #####          #####    #####
+        //       #####          ####################         #####          ####################    #####       #####     ###############     #####          #####    ###############
+        //       #####          ####################         #####          ####################    #####        #####    ###############     #####          #####    ###############
+
+
+
+        // En tutorial som förklarar hur spelet funkar.
+        static void tutorial()
+        {
+            Console.Clear();
+
+            // Inledning
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Welcome to the tutorial!");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine();
+            Thread.Sleep(TimeSpan.FromSeconds(3));
+            Console.WriteLine("Here you will get a brief introduction to how the game");
+            Console.WriteLine("works, but don't worry, it won't take a lot of time!");
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+            Console.Clear();
+
+            // Del 1 av tutorialen: värden
+            Console.WriteLine("To begin with, let's talk about you and the enemies.");
+            Thread.Sleep(TimeSpan.FromSeconds(3));
+            Console.WriteLine();
+            Console.WriteLine("There are a few important values that you need to know:");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Health, Max Damage, Min Damage, Type, Gold and Accuracy.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+            Console.WriteLine();
+            Console.WriteLine("Health is pretty self explanatory. Maximum and Minimum");
+            Console.WriteLine("damage is the max/min damage that the player or the");
+            Console.WriteLine("enemy can cause, because the damage is randomized. The");
+            Console.WriteLine("enemies damage will vary depending on the enemy type.");
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+            Console.WriteLine();
+            Console.WriteLine("Accuracy is very important part of the game, because");
+            Console.WriteLine("there's actually a chance that you or the enemy miss");
+            Console.WriteLine("an attack! The accuracy is a number between 0 and 1");
+            Console.WriteLine("where 1 is 100% a hit. The enemy accuracy will depend");
+            Console.WriteLine("on the enemy type. The player will be able to buy items");
+            Console.WriteLine("in the game later on that can change the standard value");
+            Console.WriteLine("(0.8), standard damage (10 - 40) and standard health (100).");
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+            Console.WriteLine();
+            Console.WriteLine("Then we have Gold. Gold can be earned from killing enemies.");
+            Console.WriteLine("Different amounts of gold will be awarded depending on the enemy");
+            Console.WriteLine("type. Gold can then be used in the shop to buy different items.");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("Press ENTER to continue.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.ReadLine();
+            Console.Clear();
+
+
+
+            // Del 2 av tutorialen: enemy types
+            Console.WriteLine("Now let's go through the different enemy types!");
+            Console.WriteLine("The different enemy types are:");
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Thread.Sleep(TimeSpan.FromSeconds(0.5));
+            Console.WriteLine();
+            Console.WriteLine("Undead - A very basic enemy, average HP, damage and accuracy");
+
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Thread.Sleep(TimeSpan.FromSeconds(0.5));
+            Console.WriteLine();
+            Console.WriteLine("Magic - High damage and accuracy but very low HP | Has a chance to heal itself!");
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Thread.Sleep(TimeSpan.FromSeconds(0.5));
+            Console.WriteLine();
+            Console.WriteLine("Tank - Very high HP, low damage and average accuracy | Armor penetrating weapon recommended!");
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Thread.Sleep(TimeSpan.FromSeconds(0.5));
+            Console.WriteLine();
+            Console.WriteLine("Goblin - average HP, damage and accuracy | Has a chance to steal gold from you!");
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Thread.Sleep(TimeSpan.FromSeconds(0.5));
+            Console.WriteLine();
+            Console.WriteLine("Demon - Average HP, Insanely high damage but really bad accuracy | Immune to spells!");
+
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Thread.Sleep(TimeSpan.FromSeconds(0.5));
+            Console.WriteLine();
+            Console.WriteLine("Astral - Average HP, low damage and average accuracy | Armor prenetrating, armor recommended!");
+            Console.WriteLine();
+            Console.WriteLine();
+
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("Press ENTER to continue.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.ReadLine();
+            Console.Clear();
+
+
+
+            // Del 3 av tutorialen: butik och föremål
+            Console.WriteLine("Work in progress...");
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("Press ENTER to continue.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.ReadLine();
+            Console.Clear();
+        }
+
+
+
+        //  ############         #####          #####   ########       #####
+        //  ###############      #####          #####   #########      #####
+        //  #####       #####    #####          #####   ##########     #####
+        //  #####       #####    #####          #####   ##### #####    #####
+        //  ###############      #####          #####   #####  #####   #####
+        //  #############        #####          #####   #####   #####  #####
+        //  #####    #####       #####          #####   #####    ##### #####
+        //  #####     #####      #####          #####   #####     ##########
+        //  #####       #####    ####################   #####      #########
+        //  #####        #####   ####################   #####       ########
+
+
+
+        static void run()
+        {
+            Console.Clear();
+            string propertyData = File.ReadAllText(@"..\properties.json");
+
+            Levels deserializedLevels = JsonSerializer.Deserialize<Levels>(propertyData);
+
+            if (saveTo1)
+            {
+                if (deserializedLevels.level1 == true)
+                {
+                    level1();
+                }
+                else if (deserializedLevels.level2 == true)
+                {
+                    level2();
+                }
+                else if (deserializedLevels.level3 == true)
+                {
+                    level3();
+                }
+                else if (deserializedLevels.level4 == true)
+                {
+                    level4();
+                }
+                else if (deserializedLevels.level5 == true)
+                {
+                    
+                }
+            }
+            else if (saveTo2)
+            {
+                
+            }
+            else if (saveTo3)
+            {
+                
+            }
+        }
+
+
+
+        // #####                    ######
+        // #####                  ########
+        // #####                ##########
+        // #####                     #####
+        // #####                     #####
+        // #####                     #####
+        // #####                     #####
+        // #####                     #####
+        // ###############      ###############
+        // ###############      ###############
 
 
 
         static void level1()
         {
-            
-        }
-
-
-
-        static void Run()
-        {
             Console.Clear();
-
 
             Console.WriteLine("Ready...");
             Thread.Sleep(TimeSpan.FromSeconds(1));
@@ -554,53 +744,69 @@ namespace fightinggame
             Console.WriteLine("FIGHT!");
             Console.WriteLine();
             Console.WriteLine();
-
-            // Vad som händer så länge en spelare är vid liv
-            // while (Player.health > 0 && Enemy > 0)
-            // {
-            //     Random rdm = new Random();
-
-            //     //Slumpar skada som spelarna gör på varandra, visar sedan hur mycket skade de gjorde på varandra samt hur mycket hp de har kvar.
-            //     int p1dmg = rdm.Next(1, 41), p2dmg = rdm.Next(1, 41);
-            //     p1HP -= p2dmg;
-            //     p2HP -= p1dmg;
-
-            //     Console.WriteLine($"{name1} dealt {p1dmg} damage to {name2}!");
-            //     Console.WriteLine($"{name2} dealt {p2dmg} damage to {name1}!");
-            //     Console.WriteLine();
-
-            //     if (p1HP < 0)
-            //     {
-            //         p1HP = 0;
-            //     }
-            //     else if (p2HP < 0)
-            //     {
-            //         p2HP = 0;
-            //     }
-
-            //     Console.WriteLine($"{name1}'s health: {p1HP}");
-            //     Console.WriteLine($"{name2}'s health: {p2HP}");
-            //     Console.WriteLine();
-            //     Console.WriteLine();
-            //     Thread.Sleep(TimeSpan.FromSeconds(3));
-            // }
-
-            // //Vad som händer beroende på vem det är som vinner.
-            // if (p1HP > 0)
-            // {
-            //     Console.WriteLine($"{name1} won with {p1HP} HP left!");
-            // }
-            // else if (p2HP > 0)
-            // {
-            //     Console.WriteLine($"{name2} won with {p2HP} HP left!");
-            // }
-            // else if (p1HP <= 0 && p2HP <= 0)
-            // {
-            //     Console.WriteLine($"{name1} and {name2} killed each other, it's a draw!");
-            // }
+        }
 
 
-            Console.ReadLine();
+
+        static void level2()
+        {
+
+        }
+
+
+
+        static void level3()
+        {
+
+        }
+
+
+
+        static void level4()
+        {
+
+        }
+
+
+
+        static void level5()
+        {
+
+        }
+
+
+
+        static void level6()
+        {
+
+        }
+
+
+
+        static void level7()
+        {
+
+        }
+
+
+
+        static void level8()
+        {
+
+        }
+
+
+
+        static void level9()
+        {
+
+        }
+
+
+
+        static void level10()
+        {
+
         }
     }
 }
