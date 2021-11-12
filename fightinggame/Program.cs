@@ -132,8 +132,8 @@ namespace fightinggame
         //  ####################     ####################        #####    #####          ###############
         //                 #####     ####################         #####  #####           #####
         //  #####          #####     #####          #####          ##########            #####
-        //  ####################     #####          #####           #######              ####################
-        //  ####################     #####          #####            #####               ####################
+        //  ####################     #####          #####           ########             ####################
+        //  ####################     #####          #####            ######              ####################
 
         static bool saveTo1 = false, saveTo2 = false, saveTo3 = false;
         static bool overwrite1 = false, overwrite2 = false, overwrite3 = false;
@@ -325,7 +325,10 @@ namespace fightinggame
 
 
         // Metod för att ladda in en sparfil
-        static void LoadSaveGame() {
+        static void LoadSaveGame()
+        {
+            Console.Clear();
+            
             int selected = 1;
             var ch = ConsoleKey.Insert;
             do
@@ -399,15 +402,22 @@ namespace fightinggame
                         switch (selected)
                         {
                             case 1:
-                                
+                                saveTo1 = true;
+                                saveTo2 = false;
+                                saveTo3 = false;
+                                Run();
                                 break;
 
                             case 2:
-                                LoadSaveGame();
+                                saveTo1 = true;
+                                saveTo2 = false;
+                                saveTo3 = false;
                                 break;
 
                             case 3:
-                                // LevelSelector();
+                                saveTo1 = true;
+                                saveTo2 = false;
+                                saveTo3 = false;
                                 break;
                         }
                         break;
@@ -415,6 +425,39 @@ namespace fightinggame
                 Console.Clear();
             } while (true);
         }
+
+
+
+        static void loadContent()
+        {
+            Console.Clear();
+            
+            if (saveTo1)
+            {
+                
+            }
+            else if (saveTo2)
+            {
+                
+            }
+            else if(saveTo3)
+            {
+                
+            }
+        }
+
+
+
+        //  ########       #####    ####################    #####             #####
+        //  #########      #####    ####################    #####             #####
+        //  ##########     #####    #####                   #####             #####
+        //  ##### #####    #####    #####                   #####    #####    #####
+        //  #####  #####   #####    ###############         #####   #######   #####
+        //  #####   #####  #####    ###############         #####  #########  #####
+        //  #####    ##### #####    #####                   ##### ##### ##### #####
+        //  #####     ##########    #####                   ##########   ##########
+        //  #####      #########    ####################    #########     #########
+        //  #####       ########    ####################    ########       ########
 
 
 
@@ -446,8 +489,8 @@ namespace fightinggame
             EnemyCollection ec = deserializedEnemies.enemy;
 
             p.name = "undefined";
-            
-            ReplaceName:
+
+        ReplaceName:
             string allData = File.ReadAllText(@"..\properties.json");
             allData = allData.Replace("undefined", p.name);
 
@@ -457,7 +500,7 @@ namespace fightinggame
                 Console.WriteLine("To begin with, what would you like to be called?");
                 Console.WriteLine("Enter your name below:");
 
-                while (p.name == "undefined" || p.name == "" || p.name.Length > 16 )
+                while (p.name == "undefined" || p.name == "" || p.name.Length > 16)
                 {
                     p.name = Console.ReadLine();
 
@@ -492,8 +535,18 @@ namespace fightinggame
 
 
 
+        static void level1()
+        {
+            
+        }
+
+
+
         static void Run()
         {
+            Console.Clear();
+
+
             Console.WriteLine("Ready...");
             Thread.Sleep(TimeSpan.FromSeconds(1));
             Console.WriteLine("Set...");
