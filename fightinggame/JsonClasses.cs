@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace fightinggame
 {
@@ -33,20 +32,12 @@ namespace fightinggame
         public int health { get; set; }
         public int max_damage { get; set; }
         public int min_damage { get; set; }
-        public int id { get; set; }
+        public int accuracy { get; set; }
+        public string type { get; set; }
     }
 
 
 
-    public class LevelList
-    {
-        // [JsonPropertyName("levels")]
-        public LevelCollection level { get; set; }
-    }
-    public class LevelCollection
-    {
-        public List<Level> level { get; set; }
-    }
     public class Level
     {
         public bool level1 { get; set; }

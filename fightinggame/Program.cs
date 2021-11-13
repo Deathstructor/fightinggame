@@ -1,8 +1,9 @@
-﻿using System.ComponentModel;
-using System;
+﻿using System;
 using System.IO;
 using System.Threading;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+
 
 
 namespace fightinggame
@@ -431,26 +432,6 @@ namespace fightinggame
 
 
 
-        static void loadContent()
-        {
-            Console.Clear();
-
-            if (saveTo1)
-            {
-
-            }
-            else if (saveTo2)
-            {
-
-            }
-            else if (saveTo3)
-            {
-
-            }
-        }
-
-
-
         //  ########       #####    ####################    #####             #####
         //  #########      #####    ####################    #####             #####
         //  ##########     #####    #####                   #####             #####
@@ -534,8 +515,6 @@ namespace fightinggame
             {
                 File.WriteAllText(@"..\Savegames\Save3Settings.json", allData);
             }
-
-            level1();
         }
 
 
@@ -624,7 +603,7 @@ namespace fightinggame
             Console.ForegroundColor = ConsoleColor.Cyan;
             Thread.Sleep(TimeSpan.FromSeconds(0.5));
             Console.WriteLine();
-            Console.WriteLine("Tank - Very high HP, low damage and average accuracy | Armor penetrating weapon recommended!");
+            Console.WriteLine("Tank - Very high HP, low damage and average accuracy | ");
 
             Console.ForegroundColor = ConsoleColor.Green;
             Thread.Sleep(TimeSpan.FromSeconds(0.5));
@@ -639,7 +618,7 @@ namespace fightinggame
             Console.ForegroundColor = ConsoleColor.DarkBlue;
             Thread.Sleep(TimeSpan.FromSeconds(0.5));
             Console.WriteLine();
-            Console.WriteLine("Astral - Average HP, low damage and average accuracy | Armor prenetrating, armor recommended!");
+            Console.WriteLine("Astral - Average HP, low damage and 100% accuracy | ");
             Console.WriteLine();
             Console.WriteLine();
 
@@ -681,40 +660,138 @@ namespace fightinggame
         static void run()
         {
             Console.Clear();
-            string propertyData = File.ReadAllText(@"..\properties.json");
 
-            Levels deserializedLevels = JsonSerializer.Deserialize<Levels>(propertyData);
+            string propertyData = File.ReadAllText(@"..\properties.json");
+            Level deserializedLevels = JsonSerializer.Deserialize<Level>(propertyData);
 
             if (saveTo1)
             {
-                if (deserializedLevels.level1 == true)
+                if (deserializedLevels.level1 == false)
                 {
                     level1();
                 }
-                else if (deserializedLevels.level2 == true)
+                else if (deserializedLevels.level2 == false)
                 {
                     level2();
                 }
-                else if (deserializedLevels.level3 == true)
+                else if (deserializedLevels.level3 == false)
                 {
                     level3();
                 }
-                else if (deserializedLevels.level4 == true)
+                else if (deserializedLevels.level4 == false)
                 {
                     level4();
                 }
-                else if (deserializedLevels.level5 == true)
+                else if (deserializedLevels.level5 == false)
                 {
-                    
+                    level5();
+                }
+                else if (deserializedLevels.level6 == false)
+                {
+                    level6();
+                }
+                else if (deserializedLevels.level7 == false)
+                {
+                    level7();
+                }
+                else if (deserializedLevels.level8 == false)
+                {
+                    level8();
+                }
+                else if (deserializedLevels.level9 == false)
+                {
+                    level9();
+                }
+                else if (deserializedLevels.level10 == false)
+                {
+                    level10();
                 }
             }
             else if (saveTo2)
             {
-                
+                if (deserializedLevels.level1 == false)
+                {
+                    level1();
+                }
+                else if (deserializedLevels.level2 == false)
+                {
+                    level2();
+                }
+                else if (deserializedLevels.level3 == false)
+                {
+                    level3();
+                }
+                else if (deserializedLevels.level4 == false)
+                {
+                    level4();
+                }
+                else if (deserializedLevels.level5 == false)
+                {
+                    level5();
+                }
+                else if (deserializedLevels.level6 == false)
+                {
+                    level6();
+                }
+                else if (deserializedLevels.level7 == false)
+                {
+                    level7();
+                }
+                else if (deserializedLevels.level8 == false)
+                {
+                    level8();
+                }
+                else if (deserializedLevels.level9 == false)
+                {
+                    level9();
+                }
+                else if (deserializedLevels.level10 == false)
+                {
+                    level10();
+                }
             }
             else if (saveTo3)
             {
-                
+                if (deserializedLevels.level1 == false)
+                {
+                    level1();
+                }
+                else if (deserializedLevels.level2 == false)
+                {
+                    level2();
+                }
+                else if (deserializedLevels.level3 == false)
+                {
+                    level3();
+                }
+                else if (deserializedLevels.level4 == false)
+                {
+                    level4();
+                }
+                else if (deserializedLevels.level5 == false)
+                {
+                    level5();
+                }
+                else if (deserializedLevels.level6 == false)
+                {
+                    level6();
+                }
+                else if (deserializedLevels.level7 == false)
+                {
+                    level7();
+                }
+                else if (deserializedLevels.level8 == false)
+                {
+                    level8();
+                }
+                else if (deserializedLevels.level9 == false)
+                {
+                    level9();
+                }
+                else if (deserializedLevels.level10 == false)
+                {
+                    level10();
+                }
             }
         }
 
@@ -736,6 +813,39 @@ namespace fightinggame
         static void level1()
         {
             Console.Clear();
+
+            string propertyData = File.ReadAllText(@"..\properties.json");
+
+            User deserializedPlayer = JsonSerializer.Deserialize<User>(propertyData);
+            EnemyTypes deserializedEnemies = JsonSerializer.Deserialize<EnemyTypes>(propertyData);
+
+            Player p = deserializedPlayer.player;
+            EnemyCollection ec = deserializedEnemies.enemy;
+
+            Console.WriteLine("Level 1");
+            Thread.Sleep(TimeSpan.FromSeconds(1));
+            Console.WriteLine();
+            Console.WriteLine("First enemy:");
+            Thread.Sleep(TimeSpan.FromSeconds(1));
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine();
+
+            Console.WriteLine($"{ec.enemy[1].name}");
+            Thread.Sleep(TimeSpan.FromSeconds(1));
+            Console.WriteLine($"Health: {ec.enemy[1].health}");
+            Thread.Sleep(TimeSpan.FromSeconds(0.5));
+            Console.WriteLine($"Max Damage: {ec.enemy[1].max_damage}");
+            Thread.Sleep(TimeSpan.FromSeconds(0.5));
+            Console.WriteLine($"Min Damage: {ec.enemy[1].min_damage}");
+            Thread.Sleep(TimeSpan.FromSeconds(0.5));
+            Console.WriteLine($"Accuracy: {ec.enemy[1].type}");
+            Thread.Sleep(TimeSpan.FromSeconds(3));
+
+            Console.WriteLine();
+
+
+
+
 
             Console.WriteLine("Ready...");
             Thread.Sleep(TimeSpan.FromSeconds(1));
