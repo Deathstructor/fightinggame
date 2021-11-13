@@ -14,6 +14,9 @@ namespace fightinggame
         public int health { get; set; }
         public int max_damage { get; set; }
         public int min_damage { get; set; }
+        public double accuracy { get; set; }
+        public int gold { get; set; }
+        public int level { get; set; }
     }
 
 
@@ -35,21 +38,5 @@ namespace fightinggame
         public int min_damage { get; set; }
         public double accuracy { get; set; }
         public string type { get; set; }
-    }
-
-
-
-    public class Level
-    {
-        public bool level1 { get; set; }
-        public bool level2 { get; set; }
-        public bool level3 { get; set; }
-        public bool level4 { get; set; }
-        public bool level5 { get; set; }
-        public bool level6 { get; set; }
-        public bool level7 { get; set; }
-        public bool level8 { get; set; }
-        public bool level9 { get; set; }
-        public bool level10 { get; set; }
     }
 }

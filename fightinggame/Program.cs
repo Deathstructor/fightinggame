@@ -1,8 +1,8 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System;
 using System.IO;
 using System.Threading;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 
 
@@ -12,6 +12,7 @@ namespace fightinggame
     {
         static void Main(string[] args)
         {
+            level();
             Menu();
         }
 
@@ -271,6 +272,7 @@ namespace fightinggame
                                         Thread.Sleep(TimeSpan.FromSeconds(2));
                                         newGame();
                                         overwrite2 = true;
+                                        done = true;
                                     }
                                     else
                                     {
@@ -298,6 +300,7 @@ namespace fightinggame
                                         Thread.Sleep(TimeSpan.FromSeconds(2));
                                         newGame();
                                         overwrite3 = true;
+                                        done = true;
                                     }
                                     else
                                     {
@@ -660,140 +663,7 @@ namespace fightinggame
 
         static void run()
         {
-            Console.Clear();
 
-            string propertyData = File.ReadAllText(@"..\properties.json");
-            Level deserializedLevels = JsonSerializer.Deserialize<Level>(propertyData);
-
-            if (saveTo1)
-            {
-                if (deserializedLevels.level1 == false)
-                {
-                    level1();
-                }
-                else if (deserializedLevels.level2 == false)
-                {
-                    level2();
-                }
-                else if (deserializedLevels.level3 == false)
-                {
-                    level3();
-                }
-                else if (deserializedLevels.level4 == false)
-                {
-                    level4();
-                }
-                else if (deserializedLevels.level5 == false)
-                {
-                    level5();
-                }
-                else if (deserializedLevels.level6 == false)
-                {
-                    level6();
-                }
-                else if (deserializedLevels.level7 == false)
-                {
-                    level7();
-                }
-                else if (deserializedLevels.level8 == false)
-                {
-                    level8();
-                }
-                else if (deserializedLevels.level9 == false)
-                {
-                    level9();
-                }
-                else if (deserializedLevels.level10 == false)
-                {
-                    level10();
-                }
-            }
-            else if (saveTo2)
-            {
-                if (deserializedLevels.level1 == false)
-                {
-                    level1();
-                }
-                else if (deserializedLevels.level2 == false)
-                {
-                    level2();
-                }
-                else if (deserializedLevels.level3 == false)
-                {
-                    level3();
-                }
-                else if (deserializedLevels.level4 == false)
-                {
-                    level4();
-                }
-                else if (deserializedLevels.level5 == false)
-                {
-                    level5();
-                }
-                else if (deserializedLevels.level6 == false)
-                {
-                    level6();
-                }
-                else if (deserializedLevels.level7 == false)
-                {
-                    level7();
-                }
-                else if (deserializedLevels.level8 == false)
-                {
-                    level8();
-                }
-                else if (deserializedLevels.level9 == false)
-                {
-                    level9();
-                }
-                else if (deserializedLevels.level10 == false)
-                {
-                    level10();
-                }
-            }
-            else if (saveTo3)
-            {
-                if (deserializedLevels.level1 == false)
-                {
-                    level1();
-                }
-                else if (deserializedLevels.level2 == false)
-                {
-                    level2();
-                }
-                else if (deserializedLevels.level3 == false)
-                {
-                    level3();
-                }
-                else if (deserializedLevels.level4 == false)
-                {
-                    level4();
-                }
-                else if (deserializedLevels.level5 == false)
-                {
-                    level5();
-                }
-                else if (deserializedLevels.level6 == false)
-                {
-                    level6();
-                }
-                else if (deserializedLevels.level7 == false)
-                {
-                    level7();
-                }
-                else if (deserializedLevels.level8 == false)
-                {
-                    level8();
-                }
-                else if (deserializedLevels.level9 == false)
-                {
-                    level9();
-                }
-                else if (deserializedLevels.level10 == false)
-                {
-                    level10();
-                }
-            }
         }
 
 
@@ -811,40 +681,60 @@ namespace fightinggame
 
 
 
-        static void level1()
+        static void level()
         {
             Console.Clear();
-            
-            string propertyData = File.ReadAllText(@"..\properties.json");
 
-            User deserializedPlayer = JsonSerializer.Deserialize<User>(propertyData);
-            EnemyTypes deserializedEnemies = JsonSerializer.Deserialize<EnemyTypes>(propertyData);
+            string saveData;
+
+            if (saveTo1)
+            {
+                saveData = File.ReadAllText(@"..\Savegames\Save1.json");
+            }
+            else if (saveTo2)
+            {
+                saveData = File.ReadAllText(@"..\Savegames\Save2.json");
+            }
+            else
+            {
+                saveData = File.ReadAllText(@"..\Savegames\Save3.json");
+            }
+
+
+            User deserializedPlayer = JsonSerializer.Deserialize<User>(saveData);
+            EnemyTypes deserializedEnemies = JsonSerializer.Deserialize<EnemyTypes>(saveData);
 
             Player p = deserializedPlayer.player;
             EnemyCollection ec = deserializedEnemies.enemy;
 
-            Console.WriteLine("Level 1");
+            Enemy[] opponents = generateEnemies(ec, p);
+
+            Console.WriteLine($"Level {p.level}");
             Thread.Sleep(TimeSpan.FromSeconds(1));
             Console.WriteLine();
-            Console.WriteLine("First enemy:");
+            Console.WriteLine("Enemies that you'll fight:");
             Thread.Sleep(TimeSpan.FromSeconds(1));
-            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine();
 
-            Console.WriteLine($"{ec.enemy[0].name}");
-            Thread.Sleep(TimeSpan.FromSeconds(1));
-            Console.WriteLine($"Health: {ec.enemy[0].health}");
-            Thread.Sleep(TimeSpan.FromSeconds(0.5));
-            Console.WriteLine($"Max Damage: {ec.enemy[0].max_damage}");
-            Thread.Sleep(TimeSpan.FromSeconds(0.5));
-            Console.WriteLine($"Min Damage: {ec.enemy[0].min_damage}");
-            Thread.Sleep(TimeSpan.FromSeconds(0.5));
-            Console.WriteLine($"Accuracy: {ec.enemy[0].accuracy}");
-            Thread.Sleep(TimeSpan.FromSeconds(0.5));
-            Console.WriteLine($"Type: {ec.enemy[0].type}");
-            Thread.Sleep(TimeSpan.FromSeconds(3));
+            foreach (Enemy e in opponents)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine($"{e.name}");
+                Thread.Sleep(TimeSpan.FromSeconds(1));
+                Console.WriteLine($"Health: {e.health}");
+                Thread.Sleep(TimeSpan.FromSeconds(0.1));
+                Console.WriteLine($"Max/Min Damage: {e.max_damage} / {e.min_damage}");
+                Thread.Sleep(TimeSpan.FromSeconds(0.1));
+                Console.WriteLine($"Accuracy: {e.accuracy}");
+                Thread.Sleep(TimeSpan.FromSeconds(0.1));
+                Console.WriteLine($"Type: {e.type}");
+                Console.WriteLine();
+                // Thread.Sleep(TimeSpan.FromSeconds(1));
+            }
+            Console.WriteLine($"{opponents.Length}");
+            Console.ReadLine();
+            
 
-            Console.WriteLine();
 
 
 
@@ -859,67 +749,18 @@ namespace fightinggame
             Console.WriteLine();
         }
 
-
-
-        static void level2()
+        static Enemy[] generateEnemies(EnemyCollection ec, Player p)
         {
+            List<Enemy> generatedEnemies = new List<Enemy>();
+            Random rdm = new Random();
+            int amount = rdm.Next(1, p.level);
 
-        }
+            for (var i = 0; i < amount; i++)
+            {
+                generatedEnemies.Add(ec.enemy[rdm.Next(0, ec.enemy.Count)]);
+            }
 
-
-
-        static void level3()
-        {
-
-        }
-
-
-
-        static void level4()
-        {
-
-        }
-
-
-
-        static void level5()
-        {
-
-        }
-
-
-
-        static void level6()
-        {
-
-        }
-
-
-
-        static void level7()
-        {
-
-        }
-
-
-
-        static void level8()
-        {
-
-        }
-
-
-
-        static void level9()
-        {
-
-        }
-
-
-
-        static void level10()
-        {
-
+            return generatedEnemies.ToArray();
         }
     }
 }
