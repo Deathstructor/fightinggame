@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace fightinggame
 {
@@ -19,7 +20,7 @@ namespace fightinggame
 
     public class EnemyTypes
     {
-        // [JsonPropertyName("enemies")]
+        [JsonPropertyName("enemies")]
         public EnemyCollection enemy { get; set; }
     }
     public class EnemyCollection
@@ -32,7 +33,7 @@ namespace fightinggame
         public int health { get; set; }
         public int max_damage { get; set; }
         public int min_damage { get; set; }
-        public int accuracy { get; set; }
+        public double accuracy { get; set; }
         public string type { get; set; }
     }
 

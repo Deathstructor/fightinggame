@@ -233,7 +233,6 @@ namespace fightinggame
                                     kp = Console.ReadKey(true).Key;
                                     if (kp == ConsoleKey.Y)
                                     {
-                                        File.WriteAllText(@"..\Savegames\Save1", "Successfully Created Savefile");
                                         Console.WriteLine();
                                         Console.WriteLine();
                                         Console.WriteLine("Successfully Created Savefile");
@@ -263,7 +262,6 @@ namespace fightinggame
                                     kp = Console.ReadKey(true).Key;
                                     if (kp == ConsoleKey.Y)
                                     {
-                                        File.WriteAllText(@"..\Savegames\Save2", "Successfully Created Savefile");
                                         Console.WriteLine();
                                         Console.WriteLine();
                                         Console.WriteLine("Successfully Created Savefile");
@@ -292,7 +290,6 @@ namespace fightinggame
                                     kp = Console.ReadKey(true).Key;
                                     if (kp == ConsoleKey.Y)
                                     {
-                                        File.WriteAllText(@"..\Savegames\Save3", "Successfully Created Savefile");
                                         Console.WriteLine();
                                         Console.WriteLine("Successfully Created Savefile");
                                         saveTo1 = false;
@@ -416,12 +413,14 @@ namespace fightinggame
                                 saveTo1 = true;
                                 saveTo2 = false;
                                 saveTo3 = false;
+                                run();
                                 break;
 
                             case 3:
                                 saveTo1 = true;
                                 saveTo2 = false;
                                 saveTo3 = false;
+                                run();
                                 break;
                         }
                         break;
@@ -453,15 +452,15 @@ namespace fightinggame
 
             if (saveTo1)
             {
-                propertyData = File.ReadAllText(@"..\Savegames\Save1Settings.json");
+                propertyData = File.ReadAllText(@"..\Savegames\Save1.json");
             }
             else if (saveTo2)
             {
-                propertyData = File.ReadAllText(@"..\Savegames\Save2Settings.json");
+                propertyData = File.ReadAllText(@"..\Savegames\Save2.json");
             }
             else if (saveTo3)
             {
-                propertyData = File.ReadAllText(@"..\Savegames\Save3Settings.json");
+                propertyData = File.ReadAllText(@"..\Savegames\Save3.json");
             }
 
 
@@ -505,16 +504,18 @@ namespace fightinggame
 
             if (saveTo1)
             {
-                File.WriteAllText(@"..\Savegames\Save1Settings.json", allData);
+                File.WriteAllText(@"..\Savegames\Save1.json", allData);
             }
             else if (saveTo2)
             {
-                File.WriteAllText(@"..\Savegames\Save2Settings.json", allData);
+                File.WriteAllText(@"..\Savegames\Save2.json", allData);
             }
             else if (saveTo3)
             {
-                File.WriteAllText(@"..\Savegames\Save3Settings.json", allData);
+                File.WriteAllText(@"..\Savegames\Save3.json", allData);
             }
+
+            run();
         }
 
 
@@ -813,7 +814,7 @@ namespace fightinggame
         static void level1()
         {
             Console.Clear();
-
+            
             string propertyData = File.ReadAllText(@"..\properties.json");
 
             User deserializedPlayer = JsonSerializer.Deserialize<User>(propertyData);
@@ -830,15 +831,17 @@ namespace fightinggame
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine();
 
-            Console.WriteLine($"{ec.enemy[1].name}");
+            Console.WriteLine($"{ec.enemy[0].name}");
             Thread.Sleep(TimeSpan.FromSeconds(1));
-            Console.WriteLine($"Health: {ec.enemy[1].health}");
+            Console.WriteLine($"Health: {ec.enemy[0].health}");
             Thread.Sleep(TimeSpan.FromSeconds(0.5));
-            Console.WriteLine($"Max Damage: {ec.enemy[1].max_damage}");
+            Console.WriteLine($"Max Damage: {ec.enemy[0].max_damage}");
             Thread.Sleep(TimeSpan.FromSeconds(0.5));
-            Console.WriteLine($"Min Damage: {ec.enemy[1].min_damage}");
+            Console.WriteLine($"Min Damage: {ec.enemy[0].min_damage}");
             Thread.Sleep(TimeSpan.FromSeconds(0.5));
-            Console.WriteLine($"Accuracy: {ec.enemy[1].type}");
+            Console.WriteLine($"Accuracy: {ec.enemy[0].accuracy}");
+            Thread.Sleep(TimeSpan.FromSeconds(0.5));
+            Console.WriteLine($"Type: {ec.enemy[0].type}");
             Thread.Sleep(TimeSpan.FromSeconds(3));
 
             Console.WriteLine();
