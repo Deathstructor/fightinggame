@@ -1,11 +1,12 @@
 {
   "player": {
-    "name": "hippetyhoppety",
+    "name": "yeetus",
     "health": 100,
     "max_damage": 40,
     "min_damage": 10,
     "accuracy": 0.8,
-    "gold": 0
+    "gold": 0,
+    "level": 1
   },
 
   "enemies": {
@@ -59,18 +60,5 @@
         "type": "Astral"
       }
     ]
-  },
-
-  "levels": {
-    "level1": false,
-    "level2": false,
-    "level3": false,
-    "level4": false,
-    "level5": false,
-    "level6": false,
-    "level7": false,
-    "level8": false,
-    "level9": false,
-    "level10": false
   }
 }

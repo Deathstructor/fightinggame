@@ -12,7 +12,6 @@ namespace fightinggame
     {
         static void Main(string[] args)
         {
-            level();
             Menu();
         }
 
@@ -409,21 +408,21 @@ namespace fightinggame
                                 saveTo1 = true;
                                 saveTo2 = false;
                                 saveTo3 = false;
-                                run();
+                                level();
                                 break;
 
                             case 2:
                                 saveTo1 = true;
                                 saveTo2 = false;
                                 saveTo3 = false;
-                                run();
+                                level();
                                 break;
 
                             case 3:
                                 saveTo1 = true;
                                 saveTo2 = false;
                                 saveTo3 = false;
-                                run();
+                                level();
                                 break;
                         }
                         break;
@@ -668,16 +667,16 @@ namespace fightinggame
 
 
 
-        // #####                    ######
-        // #####                  ########
-        // #####                ##########
-        // #####                     #####
-        // #####                     #####
-        // #####                     #####
-        // #####                     #####
-        // #####                     #####
-        // ###############      ###############
-        // ###############      ###############
+        // #####                ####################    #####             #####     ####################    #####
+        // #####                ####################     #####           #####      ####################    #####
+        // #####                #####                     #####         #####       #####                   #####
+        // #####                #####                      #####       #####        #####                   #####
+        // #####                ###############             #####     #####         ###############         #####
+        // #####                ###############              #####   #####          ###############         #####
+        // #####                #####                         ##### #####           #####                   #####
+        // #####                #####                          #########            #####                   #####
+        // ###############      ####################            #######             ####################    ###############
+        // ###############      ####################             #####              ####################    ###############
 
 
 
@@ -729,24 +728,48 @@ namespace fightinggame
                 Thread.Sleep(TimeSpan.FromSeconds(0.1));
                 Console.WriteLine($"Type: {e.type}");
                 Console.WriteLine();
-                // Thread.Sleep(TimeSpan.FromSeconds(1));
+                Console.WriteLine();
+                Thread.Sleep(TimeSpan.FromSeconds(1));
+
+                while (p.health > 0 && e.health > 0)
+                {
+                    Random rdm = new Random();
+
+                    int playerDamage = rdm.Next(e.min_damage, e.max_damage);
+                    int enemyDamage = rdm.Next(p.min_damage, p.max_damage);
+
+                    p.health -= enemyDamage;
+                    e.health -= playerDamage;
+
+                    Console.WriteLine($"{p.name} dealt {playerDamage} damage to the {e.name}!");
+                    Console.WriteLine($"{e.name} dealt {enemyDamage} damage to {p.name}!");
+                    Console.WriteLine();
+
+                    if (p.health < 0)
+                    {
+                        p.health = 0;
+                    }
+                    else if (e.health < 0)
+                    {
+                        e.health = 0;
+                    }
+
+                    Console.WriteLine($"{p.name}'s health: {p.health} HP");
+                    Console.WriteLine($"The {e.name}'s health: {e.health} HP");
+
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
+                }
+
+                if (p.health == 0)
+                {
+                    Console.WriteLine("You died!");
+                }
+                else if (e.health == 0)
+                {
+                    Console.WriteLine("You won!");
+                }
             }
-            Console.WriteLine($"{opponents.Length}");
             Console.ReadLine();
-            
-
-
-
-
-
-
-            Console.WriteLine("Ready...");
-            Thread.Sleep(TimeSpan.FromSeconds(1));
-            Console.WriteLine("Set...");
-            Thread.Sleep(TimeSpan.FromSeconds(1));
-            Console.WriteLine("FIGHT!");
-            Console.WriteLine();
-            Console.WriteLine();
         }
 
         static Enemy[] generateEnemies(EnemyCollection ec, Player p)
