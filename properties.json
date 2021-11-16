@@ -1,8 +1,8 @@
 {
   "player": {
     "name": "undefined",
-    "health": 100,
-    "max_damage": 40,
+    "health": 200,
+    "max_damage": 60,
     "min_damage": 10,
     "accuracy": 0.8,
     "gold": 0,
@@ -14,7 +14,7 @@
       {
         "name": "Zombie",
         "health": 100,
-        "max_damage": 20,
+        "max_damage": 10,
         "min_damage": 1,
         "accuracy": 0.8,
         "type": "Undead"
@@ -22,7 +22,7 @@
       {
         "name": "Witch",
         "health": 80,
-        "max_damage": 40,
+        "max_damage": 30,
         "min_damage": 10,
         "accuracy": 0.85,
         "type": "Magic"
@@ -30,7 +30,7 @@
       {
         "name": "Golem",
         "health": 350,
-        "max_damage": 15,
+        "max_damage": 10,
         "min_damage": 1,
         "accuracy": 0.6,
         "type": "Tank"
@@ -38,7 +38,7 @@
       {
         "name": "Goblin",
         "health": 100,
-        "max_damage": 30,
+        "max_damage": 20,
         "min_damage": 5,
         "accuracy": 0.7,
         "type": "Goblin"
@@ -46,8 +46,8 @@
       {
         "name": "Imp",
         "health": 50,
-        "max_damage": 80,
-        "min_damage": 60,
+        "max_damage": 70,
+        "min_damage": 50,
         "accuracy": 0.2,
         "type": "Demon"
       },

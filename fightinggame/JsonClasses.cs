@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace fightinggame
 {
-    // Klasser som beskriverk objekt för att serialisera och deserialisera "properties.json".
+    // Klasser som beskriver objekt för att serialisera och deserialisera "properties.json".
     public class User
     {
         public Player player { get; set; }

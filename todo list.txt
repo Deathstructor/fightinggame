@@ -1,11 +1,6 @@
 (+ = VIKTIGT!)
 
 - flera nivåer (10 kanske?) + eventuelt "freeplay / endless" mode
-- flera fiender per bana (2-5 kanske)
--+ lista ut hur serialiserign i json funkar
-- Level selector
-- Save games {
-    Kolla om spelaren redan har ett namn
-    Spara och ladda in sparfiler
-}
-- Kanske göra en butik med uppgraderingar att köpa
+?- Level selector
+- göra en butik med uppgraderingar att köpa
+- få HP efter varje runda uppgradering i butiken

@@ -1,12 +1,12 @@
 {
   "player": {
     "name": "yeetus",
-    "health": 100,
-    "max_damage": 40,
+    "health": 200,
+    "max_damage": 60,
     "min_damage": 10,
     "accuracy": 0.8,
     "gold": 0,
-    "level": 1
+    "level": 4
   },
 
   "enemies": {

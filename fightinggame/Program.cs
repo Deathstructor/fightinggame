@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Text.RegularExpressions;
+using System.Collections.Generic;
 using System;
 using System.IO;
 using System.Threading;
@@ -29,6 +30,8 @@ namespace fightinggame
         // Metod för allt som händer i "Main Menu"
         static void Menu()
         {
+            Console.Clear();
+            
             //Ett lite "fancy" system för att navigera i menyn
             int selected = 1;
             var kp = ConsoleKey.Insert;
@@ -684,8 +687,8 @@ namespace fightinggame
         {
             Console.Clear();
 
+            // Laddar in data från sparfilen
             string saveData;
-
             if (saveTo1)
             {
                 saveData = File.ReadAllText(@"..\Savegames\Save1.json");
@@ -711,13 +714,13 @@ namespace fightinggame
             Console.WriteLine($"Level {p.level}");
             Thread.Sleep(TimeSpan.FromSeconds(1));
             Console.WriteLine();
-            Console.WriteLine("Enemies that you'll fight:");
-            Thread.Sleep(TimeSpan.FromSeconds(1));
             Console.WriteLine();
 
+            // Själva slagsmålet
             foreach (Enemy e in opponents)
             {
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                // Visar statistik för fienden man ska möta
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine($"{e.name}");
                 Thread.Sleep(TimeSpan.FromSeconds(1));
                 Console.WriteLine($"Health: {e.health}");
@@ -730,21 +733,48 @@ namespace fightinggame
                 Console.WriteLine();
                 Console.WriteLine();
                 Thread.Sleep(TimeSpan.FromSeconds(1));
+                Console.ForegroundColor = ConsoleColor.White;
 
                 while (p.health > 0 && e.health > 0)
                 {
+                    // RNG GENERATOR
                     Random rdm = new Random();
 
-                    int playerDamage = rdm.Next(e.min_damage, e.max_damage);
-                    int enemyDamage = rdm.Next(p.min_damage, p.max_damage);
+                    // Slumpar skadan man gör
+                    int playerDamage = rdm.Next(p.min_damage, p.max_damage);
+                    int enemyDamage = rdm.Next(e.min_damage, e.max_damage);
+                    //Slumpar träffsäkerheten (gör att man träffar eller missar)
+                    double playerAccuracy = rdm.NextDouble();
+                    double enemyAccuracy = rdm.NextDouble();
 
-                    p.health -= enemyDamage;
-                    e.health -= playerDamage;
 
-                    Console.WriteLine($"{p.name} dealt {playerDamage} damage to the {e.name}!");
-                    Console.WriteLine($"{e.name} dealt {enemyDamage} damage to {p.name}!");
+                    // Åsamkar skada beroende på ifall man har tur med träffsäkerheten eller inte
+                    if (playerAccuracy <= p.accuracy)
+                    {
+                        p.health -= enemyDamage;
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"{p.name} dealt {playerDamage} damage to the {e.name}!");
+                    }
+                    else {
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.WriteLine("You missed!");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+
+                    if (enemyAccuracy <= e.accuracy)
+                    {
+                        e.health -= playerDamage;
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine($"{e.name} dealt {enemyDamage} damage to {p.name}!");
+                    }
+                    else {
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.WriteLine($"The {e.name} missed!");
+                    }
                     Console.WriteLine();
 
+
+                    // Gör så att man inte hamnar på negativt HP om man dör
                     if (p.health < 0)
                     {
                         p.health = 0;
@@ -754,24 +784,38 @@ namespace fightinggame
                         e.health = 0;
                     }
 
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"{p.name}'s health: {p.health} HP");
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.WriteLine($"The {e.name}'s health: {e.health} HP");
-
-                    Thread.Sleep(TimeSpan.FromSeconds(1));
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Thread.Sleep(TimeSpan.FromSeconds(2));
                 }
 
+                // Vad som händer beroende på om spelaren överlever eller dör
                 if (p.health == 0)
                 {
                     Console.WriteLine("You died!");
+                    Console.WriteLine();
+                    Console.WriteLine();
                 }
                 else if (e.health == 0)
                 {
                     Console.WriteLine("You won!");
+                    Console.WriteLine();
+                    Console.WriteLine();
                 }
             }
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine("Press ENTER to go back to the main menu.");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.ReadLine();
+            Menu();
         }
-
+        
+        // "Genererar" fiender baserat på spelarens level
         static Enemy[] generateEnemies(EnemyCollection ec, Player p)
         {
             List<Enemy> generatedEnemies = new List<Enemy>();
