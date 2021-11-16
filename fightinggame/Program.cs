@@ -520,7 +520,9 @@ namespace fightinggame
                 File.WriteAllText(@"..\Savegames\Save3.json", allData);
             }
 
-            run();
+            Console.WriteLine($"Welcome {p.name}! You will now be redirected to the main menu.");
+            Thread.Sleep(TimeSpan.FromSeconds(5));
+            Menu();
         }
 
 
@@ -646,26 +648,6 @@ namespace fightinggame
             Console.ForegroundColor = ConsoleColor.White;
             Console.ReadLine();
             Console.Clear();
-        }
-
-
-
-        //  ############         #####          #####   ########       #####
-        //  ###############      #####          #####   #########      #####
-        //  #####       #####    #####          #####   ##########     #####
-        //  #####       #####    #####          #####   ##### #####    #####
-        //  ###############      #####          #####   #####  #####   #####
-        //  #############        #####          #####   #####   #####  #####
-        //  #####    #####       #####          #####   #####    ##### #####
-        //  #####     #####      #####          #####   #####     ##########
-        //  #####       #####    ####################   #####      #########
-        //  #####        #####   ####################   #####       ########
-
-
-
-        static void run()
-        {
-
         }
 
 
