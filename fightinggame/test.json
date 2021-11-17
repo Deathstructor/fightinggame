@@ -1,0 +1,79 @@
+{
+  "et": {
+    "enemies": {
+      "enemy": [
+        {
+          "name": "Zombie",
+          "health": 100,
+          "max_damage": 10,
+          "min_damage": 1,
+          "accuracy": 0.8,
+          "type": "Undead",
+          "max_gold_drop": 20,
+          "min_gold_drop": 10
+        },
+        {
+          "name": "Witch",
+          "health": 80,
+          "max_damage": 30,
+          "min_damage": 10,
+          "accuracy": 0.85,
+          "type": "Magic",
+          "max_gold_drop": 40,
+          "min_gold_drop": 20
+        },
+        {
+          "name": "Golem",
+          "health": 350,
+          "max_damage": 10,
+          "min_damage": 1,
+          "accuracy": 0.6,
+          "type": "Tank",
+          "max_gold_drop": 25,
+          "min_gold_drop": 15
+        },
+        {
+          "name": "Goblin",
+          "health": 100,
+          "max_damage": 20,
+          "min_damage": 5,
+          "accuracy": 0.7,
+          "type": "Goblin",
+          "max_gold_drop": 80,
+          "min_gold_drop": 50
+        },
+        {
+          "name": "Imp",
+          "health": 50,
+          "max_damage": 70,
+          "min_damage": 50,
+          "accuracy": 0.2,
+          "type": "Demon",
+          "max_gold_drop": 50,
+          "min_gold_drop": 30
+        },
+        {
+          "name": "Alien",
+          "health": 120,
+          "max_damage": 20,
+          "min_damage": 10,
+          "accuracy": 1,
+          "type": "Astral",
+          "max_gold_drop": 30,
+          "min_gold_drop": 20
+        }
+      ]
+    }
+  },
+  "us": {
+    "player": {
+      "name": "habdela",
+      "health": 200,
+      "max_damage": 60,
+      "min_damage": 10,
+      "accuracy": 0.8,
+      "gold": 0,
+      "level": 1
+    }
+  }
+}

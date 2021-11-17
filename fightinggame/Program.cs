@@ -503,7 +503,6 @@ namespace fightinggame
                         Console.WriteLine("Your name cannot contain more that 16 characters!");
                     }
                 }
-
                 goto ReplaceName;
             }
 
@@ -698,6 +697,8 @@ namespace fightinggame
             Console.WriteLine();
             Console.WriteLine();
 
+            int newGold = 0;
+
             // Själva slagsmålet
             foreach (Enemy e in opponents)
             {
@@ -705,22 +706,24 @@ namespace fightinggame
                 int rounds = opponents.Length;
                 int currentRound = 1;
 
-                // Visar statistik för fienden man ska möta
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine($"{e.name}");
-                Thread.Sleep(TimeSpan.FromSeconds(1));
-                Console.WriteLine($"Health: {e.health}");
-                Thread.Sleep(TimeSpan.FromSeconds(0.1));
-                Console.WriteLine($"Max/Min Damage: {e.max_damage} / {e.min_damage}");
-                Thread.Sleep(TimeSpan.FromSeconds(0.1));
-                Console.WriteLine($"Accuracy: {e.accuracy}");
-                Thread.Sleep(TimeSpan.FromSeconds(0.1));
-                Console.WriteLine($"Type: {e.type}");
-                Console.WriteLine();
-                Console.WriteLine();
-                Thread.Sleep(TimeSpan.FromSeconds(1));
-                Console.ForegroundColor = ConsoleColor.White;
-
+                if (p.health > 0 && e.health > 0)
+                {
+                    // Visar statistik för fienden man ska möta
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine($"{e.name}");
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
+                    Console.WriteLine($"Health: {e.health}");
+                    Thread.Sleep(TimeSpan.FromSeconds(0.1));
+                    Console.WriteLine($"Max/Min Damage: {e.max_damage} / {e.min_damage}");
+                    Thread.Sleep(TimeSpan.FromSeconds(0.1));
+                    Console.WriteLine($"Accuracy: {e.accuracy}");
+                    Thread.Sleep(TimeSpan.FromSeconds(0.1));
+                    Console.WriteLine($"Type: {e.type}");
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
 
                 while (p.health > 0 && e.health > 0)
                 {
@@ -740,7 +743,7 @@ namespace fightinggame
                     // Åsamkar skada beroende på ifall man har tur med träffsäkerheten eller inte
                     if (playerAccuracy <= p.accuracy)
                     {
-                        p.health -= enemyDamage;
+                        e.health -= playerDamage;
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine($"{p.name} dealt {playerDamage} damage to the {e.name}!");
                     }
@@ -753,7 +756,7 @@ namespace fightinggame
 
                     if (enemyAccuracy <= e.accuracy)
                     {
-                        e.health -= playerDamage;
+                        p.health -= enemyDamage;
                         Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.WriteLine($"{e.name} dealt {enemyDamage} damage to {p.name}!");
                     }
@@ -762,7 +765,7 @@ namespace fightinggame
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.WriteLine($"The {e.name} missed!");
                     }
-                    Thread.Sleep(TimeSpan.FromSeconds(1));
+                    Thread.Sleep(TimeSpan.FromSeconds(0.5));
                     Console.WriteLine();
 
 
@@ -782,32 +785,86 @@ namespace fightinggame
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine();
                     Console.WriteLine();
-                    Thread.Sleep(TimeSpan.FromSeconds(2));
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
 
+                    // Om fienden är död skriver programmet att man har vunnit rundan och man får 20 HP
                     if (e.health == 0)
                     {
-                        Console.WriteLine("You won the round! +20 HP");
-                        Console.WriteLine();
-                        Console.WriteLine();
                         p.health += 20;
+                        newGold += goldDrop;
                         currentRound++;
+                        Console.WriteLine("You won the round!");
+                        Console.WriteLine("+20 HP");
+                        Console.WriteLine($"+{goldDrop} gold");
+                        Console.WriteLine();
+                        Console.WriteLine($"You now have {p.gold + newGold} gold");
+                        Console.WriteLine();
+                        Console.WriteLine();
                     }
                 }
 
                 // Vad som händer beroende på om spelaren överlever eller dör
-                if (p.health == 0 && currentRound == rounds)
+                if (p.health == 0 && currentRound >= rounds)
                 {
                     Console.WriteLine("You died!");
                     Console.WriteLine();
                     Console.WriteLine();
                 }
-                else if (e.health == 0 && currentRound == rounds)
+                else if (e.health == 0 && currentRound >= rounds)
                 {
                     Console.WriteLine("You won!");
                     Console.WriteLine();
                     Console.WriteLine();
                 }
             }
+
+                string theData = File.ReadAllText(@"..\Savegames\Save1.json");
+                // yEs (i dare ya to question it...)
+
+                // theData = theData.Replace(p.gold, p.gold + newGold);
+
+                User tempU = JsonSerializer.Deserialize<User>(saveData);
+                EnemyTypes tempE = JsonSerializer.Deserialize<EnemyTypes>(saveData);
+
+                Player tempP = deserializedPlayer.player;
+                EnemyCollection tempEC = deserializedEnemies.enemy;
+
+                tempP.gold = 3;
+
+                string ujson = JsonSerializer.Serialize<User>(tempU);
+                string ejson = JsonSerializer.Serialize<EnemyTypes>(tempE);
+
+                (User, EnemyTypes) something;
+                something.Item1 = tempU;
+                something.Item2 = tempE;
+
+                // tObject unitedJson = new tObject();
+                // unitedJson.us = tempU;
+                // unitedJson.et = tempE;
+                //ujson + "," + ejson;
+                // string something = JsonSerializer.Serialize<tObject>(unitedJson);
+
+                File.WriteAllText(@"test.json", something);
+
+
+
+            if (saveTo1)
+            {
+                Console.WriteLine(@"\" + '\u0022' + @"gold\" + '\u0022' + ": " + p.gold);
+                Console.WriteLine(@"\" + '\u0022' + @"gold\" + '\u0022' + ": " + (p.gold + newGold));
+                File.WriteAllText(@"..\Savegames\Save1.json", theData);
+            }
+            else if (saveTo2)
+            {
+                // File.WriteAllText(@"..\Savegames\Save2.json", allData);
+            }
+            else if (saveTo3)
+            {
+                // File.WriteAllText(@"..\Savegames\Save3.json", allData);
+            }
+
+
+
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.WriteLine("Press ENTER to go back to the main menu.");
             Console.ForegroundColor = ConsoleColor.White;

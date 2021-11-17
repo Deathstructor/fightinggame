@@ -41,4 +41,12 @@ namespace fightinggame
         public int max_gold_drop { get; set; }
         public int min_gold_drop { get; set; }
     }
+
+
+
+    public class tObject
+    {
+        public User us { get; set; }
+        public EnemyTypes et { get; set; }
+    }
 }
