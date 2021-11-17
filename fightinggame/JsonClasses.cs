@@ -38,5 +38,7 @@ namespace fightinggame
         public int min_damage { get; set; }
         public double accuracy { get; set; }
         public string type { get; set; }
+        public int max_gold_drop { get; set; }
+        public int min_gold_drop { get; set; }
     }
 }

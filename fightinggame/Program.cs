@@ -31,7 +31,7 @@ namespace fightinggame
         static void Menu()
         {
             Console.Clear();
-            
+
             //Ett lite "fancy" system för att navigera i menyn
             int selected = 1;
             var kp = ConsoleKey.Insert;
@@ -701,6 +701,10 @@ namespace fightinggame
             // Själva slagsmålet
             foreach (Enemy e in opponents)
             {
+                // Antal rundor
+                int rounds = opponents.Length;
+                int currentRound = 1;
+
                 // Visar statistik för fienden man ska möta
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine($"{e.name}");
@@ -717,6 +721,7 @@ namespace fightinggame
                 Thread.Sleep(TimeSpan.FromSeconds(1));
                 Console.ForegroundColor = ConsoleColor.White;
 
+
                 while (p.health > 0 && e.health > 0)
                 {
                     // RNG GENERATOR
@@ -725,9 +730,11 @@ namespace fightinggame
                     // Slumpar skadan man gör
                     int playerDamage = rdm.Next(p.min_damage, p.max_damage);
                     int enemyDamage = rdm.Next(e.min_damage, e.max_damage);
-                    //Slumpar träffsäkerheten (gör att man träffar eller missar)
+                    // Slumpar träffsäkerheten (gör att man träffar eller missar)
                     double playerAccuracy = rdm.NextDouble();
                     double enemyAccuracy = rdm.NextDouble();
+                    // Slumpar hur mycket "gold" man får från varje enemy
+                    int goldDrop = rdm.Next(e.min_gold_drop, e.max_gold_drop);
 
 
                     // Åsamkar skada beroende på ifall man har tur med träffsäkerheten eller inte
@@ -737,7 +744,8 @@ namespace fightinggame
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine($"{p.name} dealt {playerDamage} damage to the {e.name}!");
                     }
-                    else {
+                    else
+                    {
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.WriteLine("You missed!");
                         Console.ForegroundColor = ConsoleColor.White;
@@ -749,10 +757,12 @@ namespace fightinggame
                         Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.WriteLine($"{e.name} dealt {enemyDamage} damage to {p.name}!");
                     }
-                    else {
+                    else
+                    {
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.WriteLine($"The {e.name} missed!");
                     }
+                    Thread.Sleep(TimeSpan.FromSeconds(1));
                     Console.WriteLine();
 
 
@@ -766,24 +776,32 @@ namespace fightinggame
                         e.health = 0;
                     }
 
-                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine($"{p.name}'s health: {p.health} HP");
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.WriteLine($"The {e.name}'s health: {e.health} HP");
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine();
                     Console.WriteLine();
                     Thread.Sleep(TimeSpan.FromSeconds(2));
+
+                    if (e.health == 0)
+                    {
+                        Console.WriteLine("You won the round! +20 HP");
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        p.health += 20;
+                        currentRound++;
+                    }
                 }
 
                 // Vad som händer beroende på om spelaren överlever eller dör
-                if (p.health == 0)
+                if (p.health == 0 && currentRound == rounds)
                 {
                     Console.WriteLine("You died!");
                     Console.WriteLine();
                     Console.WriteLine();
                 }
-                else if (e.health == 0)
+                else if (e.health == 0 && currentRound == rounds)
                 {
                     Console.WriteLine("You won!");
                     Console.WriteLine();
@@ -796,7 +814,7 @@ namespace fightinggame
             Console.ReadLine();
             Menu();
         }
-        
+
         // "Genererar" fiender baserat på spelarens level
         static Enemy[] generateEnemies(EnemyCollection ec, Player p)
         {
