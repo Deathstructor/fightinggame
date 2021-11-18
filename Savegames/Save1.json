@@ -1,11 +1,11 @@
 {
   "player": {
-    "name": "habdela",
+    "name": "Habdela",
     "health": 200,
     "max_damage": 60,
     "min_damage": 10,
     "accuracy": 0.8,
-    "gold": 0,
+    "gold": 15,
     "level": 1
   },
 

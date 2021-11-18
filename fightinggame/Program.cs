@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Linq;
+using System.Runtime.Serialization.Json;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System;
 using System.IO;
@@ -818,49 +820,30 @@ namespace fightinggame
                 }
             }
 
-                string theData = File.ReadAllText(@"..\Savegames\Save1.json");
-                // yEs (i dare ya to question it...)
+            // Deserialiserar json filen
+            User tempU = JsonSerializer.Deserialize<User>(saveData);
+            EnemyTypes tempE = JsonSerializer.Deserialize<EnemyTypes>(saveData);
 
-                // theData = theData.Replace(p.gold, p.gold + newGold);
+            // Lägger till guldet man har tjänat denna "session" på guldet man redan har
+            tempU.player.gold = p.gold + newGold;
 
-                User tempU = JsonSerializer.Deserialize<User>(saveData);
-                EnemyTypes tempE = JsonSerializer.Deserialize<EnemyTypes>(saveData);
-
-                Player tempP = deserializedPlayer.player;
-                EnemyCollection tempEC = deserializedEnemies.enemy;
-
-                tempP.gold = 3;
-
-                string ujson = JsonSerializer.Serialize<User>(tempU);
-                string ejson = JsonSerializer.Serialize<EnemyTypes>(tempE);
-
-                (User, EnemyTypes) something;
-                something.Item1 = tempU;
-                something.Item2 = tempE;
-
-                // tObject unitedJson = new tObject();
-                // unitedJson.us = tempU;
-                // unitedJson.et = tempE;
-                //ujson + "," + ejson;
-                // string something = JsonSerializer.Serialize<tObject>(unitedJson);
-
-                File.WriteAllText(@"test.json", something);
-
-
+            // Allt serialiseras till motsvarande sparfil
+            Types tempTypes = new Types();
+            tempTypes.enemy = tempE.enemy;
+            tempTypes.player = tempU.player;
+            string serialised = JsonSerializer.Serialize<Types>(tempTypes);
 
             if (saveTo1)
             {
-                Console.WriteLine(@"\" + '\u0022' + @"gold\" + '\u0022' + ": " + p.gold);
-                Console.WriteLine(@"\" + '\u0022' + @"gold\" + '\u0022' + ": " + (p.gold + newGold));
-                File.WriteAllText(@"..\Savegames\Save1.json", theData);
+                File.WriteAllText(@"..\Savegames\Save1.json", serialised);
             }
             else if (saveTo2)
             {
-                // File.WriteAllText(@"..\Savegames\Save2.json", allData);
+                File.WriteAllText(@"..\Savegames\Save2.json", serialised);
             }
             else if (saveTo3)
             {
-                // File.WriteAllText(@"..\Savegames\Save3.json", allData);
+                File.WriteAllText(@"..\Savegames\Save3.json", serialised);
             }
 
 

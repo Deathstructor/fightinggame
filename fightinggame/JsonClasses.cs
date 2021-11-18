@@ -43,10 +43,10 @@ namespace fightinggame
     }
 
 
-
-    public class tObject
+    public class Types
     {
-        public User us { get; set; }
-        public EnemyTypes et { get; set; }
+        public Player player { get; set; }
+        [JsonPropertyName("enemies")]
+        public EnemyCollection enemy { get; set; }
     }
 }
