@@ -72,5 +72,55 @@
         "min_gold_drop": 20
       }
     ]
+  },
+
+  "shop": {
+    "spells": [
+      {
+        "name": "Healing spell",
+        "healing": 50,
+        "inventory": 0,
+        "description": "Heals the player 50 HP."
+      },
+      {
+        "name": "Fire spell",
+        "damage": 15,
+        "inventory": 0,
+        "description": "Deals 15 extra damage each round."
+      },
+      {
+        "name": "Crit spell",
+        "crit_multiplier": 1.5,
+        "inventory": 0,
+        "description": "Makes you deal 1.5x critical damage the entire round."
+      },
+      {
+        "name": "Gold spell",
+        "gold_multiplier": 2,
+        "inventory": 0,
+        "description": "Gives you 2x more money for defeating the enemy."
+      }
+    ],
+
+    "weapons": [
+      {
+        "name": "Standard Sword",
+        "max_damage": 40,
+        "min_damage": 10,
+        "accuracy": 0.8,
+        "price": 0,
+        "owned": true,
+        "description": "Staring weapon"
+      },
+      {
+        "name": "Lightning Wand",
+        "max_damage": 70,
+        "min_damage": 40,
+        "accuracy": 0.4,
+        "price": 1000,
+        "owned": false,
+        "description": "Deals high damage, but has bad accuracy."
+      }
+    ]
   }
 }

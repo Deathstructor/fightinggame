@@ -5,10 +5,9 @@
     "max_damage": 60,
     "min_damage": 10,
     "accuracy": 0.8,
-    "gold": 15,
+    "gold": 39,
     "level": 1
   },
-
   "enemies": {
     "enemy": [
       {
