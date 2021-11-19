@@ -2,9 +2,6 @@
   "player": {
     "name": "undefined",
     "health": 200,
-    "max_damage": 60,
-    "min_damage": 10,
-    "accuracy": 0.8,
     "gold": 0,
     "level": 1
   },
@@ -120,6 +117,42 @@
         "price": 1000,
         "owned": false,
         "description": "Deals high damage, but has bad accuracy."
+      },
+      {
+        "name": "Shotgun",
+        "max_damage": 60,
+        "min_damage": 10,
+        "accuracy": 0.5,
+        "price": 750,
+        "owned": false,
+        "description": "Deals pretty high damage but has pretty bad accuracy."
+      },
+      {
+        "name": "BFG 10000",
+        "max_damage": 150,
+        "min_damage": 75,
+        "accuracy": 0.25,
+        "price": 10000,
+        "owned": false,
+        "description": "It's Hell on Earth..."
+      },
+      {
+        "name": "Excalibur",
+        "max_damage": 50,
+        "min_damage": 50,
+        "accuracy": 0.7,
+        "price": 1000,
+        "owned": false,
+        "description": "The Excalibur will always deal the same amount of damage. Pretty good accuracy."
+      },
+      {
+        "name": "Nevamiss",
+        "max_damage": 40,
+        "min_damage": 20,
+        "accuracy": 1,
+        "price": 1500,
+        "owned": false,
+        "description": "The Nevamiss will never miss a shot. Average damage."
       }
     ]
   }
